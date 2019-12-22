@@ -19,6 +19,9 @@ def periods_to_string(period):
     return switcher.get(period, " ")
 
 
+# TODO: Add function to truncate tweet if it's length is greater than 280 characters.
+
+
 def build_twitter_string(artists, period):
     """ Function to convert Last.fm result to a string that will be posted to Twitter """
     total = len(artists)
