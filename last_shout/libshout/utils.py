@@ -8,12 +8,12 @@ def periods_to_string(period):
     """ Function to convert time period setting to string value """
     now = datetime.datetime.now()
     switcher = {
-        "overall": " All-Time ",
-        "7day": " Weekly ",
-        "1month": " Monthly ",
-        "3month": " Quarterly ",
-        "6month": " Semi-Annual ",
-        "12month": " " + str(now.year) + " ",
+        "overall": "All-Time",
+        "7day": "Weekly",
+        "1month": "Monthly",
+        "3month": "Quarterly",
+        "6month": "Semi-Annual",
+        "12month": str(now.year),
     }
 
     return switcher.get(period, " ")
@@ -24,9 +24,9 @@ def build_twitter_string(artists, period):
     total = len(artists)
     txt = (
         MUSICAL_NOTE
-        + " My"
+        + " My "
         + periods_to_string(period)
-        + "Top "
+        + " Top "
         + str(total)
         + " #lastfm artists: "
     )
