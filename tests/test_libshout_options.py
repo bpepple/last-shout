@@ -15,8 +15,8 @@ class TestOptions(TestCase):
     def tearDown(self):
         self.path.cleanup()
 
-    def test_creditial_options(self):
-        """ Some test for creditial options """
+    def test_credentials_options(self):
+        """ Some test for credentials options """
         parsed = self.parser.parse_args(["--user", "test_user",])
         self.assertEqual(parsed.user, "test_user")
 
