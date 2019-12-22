@@ -14,7 +14,15 @@ def create_parser():
     parser.add_argument(
         "-n", "--number", type=int, help="Number of last.fm top artists (default is 10)"
     )
-    # TODO: Add time period option
+    parser.add_argument(
+        "-p",
+        "--period",
+        default="7day",
+        help="The time period over which to retrieve top artists.\n"
+        + "Options are:\n"
+        + "overall | 7day | 1month | 3month | 6month | 12month\n"
+        + "(default is 7day)",
+    )
     parser.add_argument("--consumer-key", help="Twitter consumer key")
     parser.add_argument("--consumer-secret", help="Twitter consumer secret")
     parser.add_argument("--access-key", help="Twitter access token key")
