@@ -13,38 +13,36 @@ from last_shout.libshout.twitter import send_tweet
 from last_shout.libshout.utils import build_twitter_string
 
 
-SETTINGS = LastShoutSettings()
-
-
 def main():
     """ Main Function """
+    settings = LastShoutSettings()
     parser = create_parser()
     opts = parser.parse_args()
 
     # Get Last.fm credentials
     if opts.user:
-        SETTINGS.last_user = opts.user
+        settings.last_user = opts.user
 
     if opts.last_access_key:
-        SETTINGS.last_access_key = opts.last_access_key
+        settings.last_access_key = opts.last_access_key
 
     # Get Twitter credentials
     if opts.consumer_key:
-        SETTINGS.consumer_key = opts.consumer_key
+        settings.consumer_key = opts.consumer_key
 
     if opts.consumer_secret:
-        SETTINGS.consumer_secret = opts.consumer_secret
+        settings.consumer_secret = opts.consumer_secret
 
     if opts.access_key:
-        SETTINGS.access_key = opts.access_key
+        settings.access_key = opts.access_key
 
     if opts.access_secret:
-        SETTINGS.access_secret = opts.access_secret
+        settings.access_secret = opts.access_secret
 
     # Save Last.fm options
     if opts.set_lastfm:
-        if SETTINGS.last_user and SETTINGS.last_access_key:
-            SETTINGS.save()
+        if settings.last_user and settings.last_access_key:
+            settings.save()
         else:
             print("Missing Last.fm credetials. Unable to save.")
             sys.exit(0)
@@ -52,33 +50,33 @@ def main():
     # Save Twitter options
     if opts.set_twitter:
         if (
-            SETTINGS.consumer_key
-            and SETTINGS.consumer_secret
-            and SETTINGS.access_key
-            and SETTINGS.access_secret
+            settings.consumer_key
+            and settings.consumer_secret
+            and settings.access_key
+            and settings.access_secret
         ):
-            SETTINGS.save()
+            settings.save()
         else:
             print("Missing Twitter credentials. Unable to save.")
             sys.exit(0)
 
     # If Last.fm or Twitter credentials are missing exit
     if (
-        not SETTINGS.last_user
-        or not SETTINGS.last_access_key
-        or not SETTINGS.consumer_key
-        or not SETTINGS.consumer_secret
-        or not SETTINGS.access_key
-        or not SETTINGS.access_secret
+        not settings.last_user
+        or not settings.last_access_key
+        or not settings.consumer_key
+        or not settings.consumer_secret
+        or not settings.access_key
+        or not settings.access_secret
     ):
         print("Missing Last.fm or Twitter credentials. Exitting...")
         sys.exit(2)
 
     artists = get_top_artist(
-        SETTINGS.last_access_key, SETTINGS.last_user, opts.number, opts.period
+        settings.last_access_key, settings.last_user, opts.number, opts.period
     )
     twitter_text = build_twitter_string(artists, opts.period)
-    send_tweet(SETTINGS, twitter_text, None)
+    send_tweet(settings, twitter_text, None)
 
 
 if __name__ == "__main__":
