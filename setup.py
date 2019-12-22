@@ -11,5 +11,6 @@ setup(
     license="GPLv3",
     packages=find_packages(),
     python_requires=">=3.6",
-    install_requires=["pylast"],
+    install_requires=["pylast", "python-twitter"],
+    entry_points={"console_scripts": ["last-shout=last_shout.main:main"]},
 )

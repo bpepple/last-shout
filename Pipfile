@@ -10,6 +10,7 @@ pytest-cov = "*"
 
 [packages]
 pylast = "*"
+python-twitter = "*"
 
 [requires]
 python_version = "3.6"
