@@ -1,7 +1,7 @@
 """ Function to make the parser """
 import argparse
 
-from .. import VERSION
+from last_shout import VERSION
 
 
 def create_parser():
@@ -11,8 +11,19 @@ def create_parser():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("-u", "--user", help="Last.fm username")
+    parser.add_argument("--last-access-key", help="Last.fm access key")
     parser.add_argument(
-        "-n", "--number", type=int, help="Number of last.fm top artists (default is 10)"
+        "--set-lastfm",
+        help="Set Last.fm credentials",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
+        "-n",
+        "--number",
+        type=int,
+        default=10,
+        help="Number of last.fm top artists (default is 10)",
     )
     parser.add_argument(
         "-p",
@@ -27,7 +38,12 @@ def create_parser():
     parser.add_argument("--consumer-secret", help="Twitter consumer secret")
     parser.add_argument("--access-key", help="Twitter access token key")
     parser.add_argument("--access-secret", help="Twitter access secret")
-    parser.add_argument("--last-access-key", help="Last.fm access key")
+    parser.add_argument(
+        "--set-twitter",
+        help="Set Twitter credentials",
+        action="store_true",
+        default=False,
+    )
     parser.add_argument(
         "--version",
         action="version",
