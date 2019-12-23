@@ -7,7 +7,8 @@ from last_shout import VERSION
 def create_parser():
     """ Function creating the parser """
     parser = argparse.ArgumentParser(
-        description="A program to post last.fm statistics to Twitter and/or Mastodon.",
+        description="A program to post last.fm statistics"
+        + " to Twitter and/or Mastodon.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("-u", "--user", help="Last.fm username")
