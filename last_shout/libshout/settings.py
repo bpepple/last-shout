@@ -1,7 +1,8 @@
 """Class to handle project settings"""
 import configparser
-import os
 import platform
+from os import environ
+from pathlib import Path
 
 
 class LastShoutSettings:
@@ -11,9 +12,9 @@ class LastShoutSettings:
     def get_settings_folder():
         """Method to determine where the users settings should be saved"""
         if platform.system() == "Windows":
-            folder = os.path.join(os.environ["APPDATA"], "LastShout")
+            folder = Path(environ["APPDATA"]).joinpath("LastShout")
         else:
-            folder = os.path.join(os.path.expanduser("~"), ".LastShout")
+            folder = Path.home() / ".LastShout"
 
         return folder
 
@@ -41,15 +42,18 @@ class LastShoutSettings:
         self.set_default_values()
 
         self.config = configparser.ConfigParser()
-        self.folder = config_dir or LastShoutSettings.get_settings_folder()
+        if config_dir:
+            self.folder = Path(config_dir)
+        else:
+            self.folder = LastShoutSettings.get_settings_folder()
 
-        if not os.path.exists(self.folder):
-            os.makedirs(self.folder)
+        if not self.folder.is_dir():
+            self.folder.mkdir(parents=True)
 
-        self.settings_file = os.path.join(self.folder, "settings.ini")
+        self.settings_file = self.folder.joinpath("settings.ini")
 
         # Write the config file if it doesn't exist
-        if not os.path.exists(self.settings_file):
+        if not self.settings_file.is_file():
             self.save()
         else:
             self.load()
@@ -100,5 +104,5 @@ class LastShoutSettings:
         # self.config["mastodon"]["access_token"] = self.mastodon_access_token
         # self.config["mastodon"]["api_base_url"] = self.mastodon_api_base_url
 
-        with open(self.settings_file, "w") as configfile:
+        with self.settings_file.open(mode="w") as configfile:
             self.config.write(configfile)
