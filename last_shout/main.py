@@ -1,16 +1,12 @@
 """ Main project file """
 
-import os
 import sys
 
-# Append sys.path so imports work.
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-
-from last_shout.libshout.lastfm import get_top_artist
-from last_shout.libshout.options import create_parser
-from last_shout.libshout.settings import LastShoutSettings
-from last_shout.libshout.twitter import send_tweet
-from last_shout.libshout.utils import build_twitter_string
+from .libshout.lastfm import get_top_artist
+from .libshout.options import create_parser
+from .libshout.settings import LastShoutSettings
+from .libshout.twitter import send_tweet
+from .libshout.utils import build_twitter_string
 
 
 def main():
