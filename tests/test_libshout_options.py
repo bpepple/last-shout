@@ -17,7 +17,7 @@ class TestOptions(TestCase):
 
     def test_credentials_options(self):
         """ Some test for credentials options """
-        parsed = self.parser.parse_args(["--user", "test_user",])
+        parsed = self.parser.parse_args(["--user", "test_user"])
         self.assertEqual(parsed.user, "test_user")
 
     def test_number_option(self):
