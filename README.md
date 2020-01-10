@@ -27,9 +27,9 @@ A command line tool to tweet a user's top artist statistics from Last.fm to Twit
 
 In order to use Last-Shout, you need at a minimum to get authentication keys for [Twitter](https://twitter.com) and [Last.fm](https://www.last.fm).
 
-* To get the necessary authenticaton keys for **Twitter**, refer to the documentation [here](https://python-twitter.readthedocs.io/en/latest/getting_started.html).
+- To get the necessary authenticaton keys for **Twitter**, refer to the documentation [here](https://python-twitter.readthedocs.io/en/latest/getting_started.html).
 
-* To get the necessary authentication keys for **Last.fm**, refer to their documentation [here](https://www.last.fm/api/).
+- To get the necessary authentication keys for **Last.fm**, refer to their documentation [here](https://www.last.fm/api/).
 
 #### Help
 
