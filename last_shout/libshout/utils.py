@@ -1,7 +1,7 @@
 """ Various utilites """
 import datetime
 
-MUSICAL_NOTE = u"\u266A"
+MUSICAL_NOTE = "\u266A"
 
 
 def periods_to_string(period):
@@ -19,8 +19,7 @@ def periods_to_string(period):
     return switcher.get(period, " ")
 
 
-# TODO: Add function to truncate tweet if it's length is
-#       greater than 280 characters.
+# TODO: Add function to truncate tweet if it's length is greater than 280 characters.
 
 
 def build_twitter_string(artists, period):
@@ -29,17 +28,10 @@ def build_twitter_string(artists, period):
     that will be posted to Twitter
     """
     total = len(artists)
-    txt = (
-        MUSICAL_NOTE
-        + " My "
-        + periods_to_string(period)
-        + " Top "
-        + str(total)
-        + " #lastfm artists: "
-    )
+    txt = f"{MUSICAL_NOTE} My {periods_to_string(period)} Top {total} #lastfm artists: "
 
     for count, artist in enumerate(artists, 1):
-        txt += artist.item.name + " (" + artist.weight + ")"
+        txt += f"{artist.item.name} ({artist.weight})"
         if count < total - 1:
             txt += ", "
         elif count == total - 1:

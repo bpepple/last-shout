@@ -12,7 +12,7 @@ setup(
     author_email="bdpepple@gmail.com",
     url="https://github.com/bpepple/last-shout",
     license="GPLv3",
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     python_requires=">=3.6",
     install_requires=["pylast", "python-twitter"],
     entry_points={"console_scripts": ["last-shout=last_shout.main:main"]},
