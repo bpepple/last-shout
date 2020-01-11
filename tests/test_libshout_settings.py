@@ -44,6 +44,9 @@ class TestSettings(TestCase):
 
         check_config = LastShoutSettings(config_dir=self.tmp_dir.name)
         self.assertEqual(check_config.consumer_key, consumer_key)
+        self.assertEqual(check_config.consumer_secret, consumer_secret)
+        self.assertEqual(check_config.access_key, access_key)
+        self.assertEqual(check_config.access_secret, access_secret)
 
 
 if __name__ == "__main__":
