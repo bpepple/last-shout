@@ -15,10 +15,12 @@ def send_tweet(settings, tweet, encoding):
     )
 
     try:
-        api.PostUpdate(tweet)
+        status = api.PostUpdate(tweet)
     except UnicodeDecodeError:
         print("Last.fm statistics could not be encoded for Twitter.")
         sys.exit(2)
     except twitter.TwitterError as error:
         print(f"Twitter error: {error.message}")
         sys.exit(2)
+
+    return status
