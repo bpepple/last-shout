@@ -20,11 +20,7 @@ def create_parser():
         default=False,
     )
     parser.add_argument(
-        "-n",
-        "--number",
-        type=int,
-        default=10,
-        help="Number of last.fm top artists (default is 10)",
+        "-n", "--number", type=int, default=10, help="Number of last.fm top artists",
     )
     parser.add_argument(
         "-p",
@@ -32,8 +28,14 @@ def create_parser():
         default="7day",
         help="The time period over which to retrieve top artists.\n"
         + "Options are:\n"
-        + "overall | 7day | 1month | 3month | 6month | 12month\n"
-        + "(default is 7day)",
+        + "overall | 7day | 1month | 3month | 6month | 12month",
+    )
+    parser.add_argument(
+        "-t",
+        "--tweet",
+        help="Post Last.fm stats to Twitter",
+        action="store_true",
+        default=False,
     )
     parser.add_argument("--consumer-key", help="Twitter consumer key")
     parser.add_argument("--consumer-secret", help="Twitter consumer secret")
