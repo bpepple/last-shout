@@ -34,11 +34,14 @@ In order to use Last-Shout, you need at a minimum to get authentication keys for
 #### Help
 
 ```bash
-usage: main.py [-h] [-u USER] [--last-access-key LAST_ACCESS_KEY]
-               [--set-lastfm] [-n NUMBER] [-p PERIOD]
-               [--consumer-key CONSUMER_KEY]
-               [--consumer-secret CONSUMER_SECRET] [--access-key ACCESS_KEY]
-               [--access-secret ACCESS_SECRET] [--set-twitter] [--version]
+usage: last-shout [-h] [-u USER] [--last-access-key LAST_ACCESS_KEY]
+                  [--set-lastfm] [-n NUMBER] [-p PERIOD] [-t]
+                  [--consumer-key CONSUMER_KEY]
+                  [--consumer-secret CONSUMER_SECRET]
+                  [--access-key ACCESS_KEY] [--access-secret ACCESS_SECRET]
+                  [--set-twitter] [--version]
+
+
 
 A program to post last.fm statistics to Twitter and/or Mastodon.
 
@@ -49,12 +52,12 @@ optional arguments:
                         Last.fm access key (default: None)
   --set-lastfm          Set Last.fm credentials (default: False)
   -n NUMBER, --number NUMBER
-                        Number of last.fm top artists (default is 10)
-                        (default: 10)
+                        Number of last.fm top artists (default: 10)
   -p PERIOD, --period PERIOD
                         The time period over which to retrieve top artists.
                         Options are: overall | 7day | 1month | 3month | 6month
-                        | 12month (default is 7day) (default: 7day)
+                        | 12month (default: 7day)
+  -t, --tweet           Post Last.fm stats to Twitter (default: False)
   --consumer-key CONSUMER_KEY
                         Twitter consumer key (default: None)
   --consumer-secret CONSUMER_SECRET
