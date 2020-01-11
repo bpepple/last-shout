@@ -1,5 +1,5 @@
 """ Test for the argparser """
-import tempfile
+
 from unittest import TestCase, main
 
 from last_shout.libshout import options
@@ -10,10 +10,6 @@ class TestOptions(TestCase):
 
     def setUp(self):
         self.parser = options.create_parser()
-        self.path = tempfile.TemporaryDirectory()
-
-    def tearDown(self):
-        self.path.cleanup()
 
     def test_credentials_options(self):
         """ Some test for credentials options """
@@ -24,6 +20,15 @@ class TestOptions(TestCase):
         """ Test to verify the option returns an integer """
         parsed = self.parser.parse_args(["-n", "5"])
         self.assertEqual(parsed.number, 5)
+
+    def test_set_lastfm(self):
+        """Test setting of last.fm credentials option"""
+        parsed = self.parser.parse_args(["--set-lastfm"])
+        self.assertTrue(parsed.set_lastfm)
+
+    def test_set_twitter(self):
+        parsed = self.parser.parse_args(["--set-twitter"])
+        self.assertTrue(parsed.set_twitter)
 
 
 if __name__ == "__main__":
