@@ -37,8 +37,6 @@ class LastShoutSettings:
         # self.mastodon_api_base_url = ""
 
     def __init__(self, config_dir=None):
-        self.settings_file = ""
-        self.folder = ""
         self.set_default_values()
 
         self.config = configparser.ConfigParser()
