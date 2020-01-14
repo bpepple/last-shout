@@ -21,7 +21,7 @@ A command line tool to tweet a user's top artist statistics from Last.fm to Twit
   ```bash
     $ git clone https://github.com/bpepple/last-shout.git
     $ cd last-shout
-    $  python3 setup.py install
+    $ python3 setup.py install
 
 ### Getting started
 
