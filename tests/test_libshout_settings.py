@@ -48,6 +48,22 @@ class TestSettings(TestCase):
         self.assertEqual(check_config.access_key, access_key)
         self.assertEqual(check_config.access_secret, access_secret)
 
+    def test_mastodon_credentials(self):
+        """ Test mastodon credentials settings """
+        client_secret = "1234567890"
+        user_token = "123abc456789"
+        api_base_url = "https://mastodon.social"
+
+        self.config.mastodon_client_secret = client_secret
+        self.config.mastodon_user_token = user_token
+        self.config.mastodon_api_base_url = api_base_url
+        self.config.save()
+
+        result = LastShoutSettings(config_dir=self.tmp_dir.name)
+        self.assertEqual(result.mastodon_client_secret, client_secret)
+        self.assertEqual(result.mastodon_user_token, user_token)
+        self.assertEqual(result.mastodon_api_base_url, api_base_url)
+
 
 if __name__ == "__main__":
     main()

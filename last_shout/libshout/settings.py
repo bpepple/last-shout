@@ -31,10 +31,9 @@ class LastShoutSettings:
         self.access_secret = ""
 
         # Mastodon credentials
-        # self.mastodon_client_id = ""
-        # self.mastodon_client_secret = ""
-        # self.mastodon_access_token = ""
-        # self.mastodon_api_base_url = ""
+        self.mastodon_client_secret = ""
+        self.mastodon_user_token = ""
+        self.mastodon_api_base_url = ""
 
     def __init__(self, config_dir=None):
         self.set_default_values()
@@ -78,6 +77,15 @@ class LastShoutSettings:
         if self.config.has_option("twitter", "access_secret"):
             self.access_secret = self.config["twitter"]["access_secret"]
 
+        if self.config.has_option("mastodon", "client_secret"):
+            self.mastodon_client_secret = self.config["mastodon"]["client_secret"]
+
+        if self.config.has_option("mastodon", "user_token"):
+            self.mastodon_user_token = self.config["mastodon"]["user_token"]
+
+        if self.config.has_option("mastodon", "api_base_url"):
+            self.mastodon_api_base_url = self.config["mastodon"]["api_base_url"]
+
     def save(self):
         """ Method to save user's settings """
         if not self.config.has_section("last_fm"):
@@ -86,8 +94,8 @@ class LastShoutSettings:
         if not self.config.has_section("twitter"):
             self.config.add_section("twitter")
 
-        # if not self.config.has_section("mastodon"):
-        #     self.config.add_section("mastodon")
+        if not self.config.has_section("mastodon"):
+            self.config.add_section("mastodon")
 
         self.config["last_fm"]["user"] = self.last_user
         self.config["last_fm"]["access_key"] = self.last_access_key
@@ -97,10 +105,9 @@ class LastShoutSettings:
         self.config["twitter"]["access_key"] = self.access_key
         self.config["twitter"]["access_secret"] = self.access_secret
 
-        # self.config["mastodon"]["client_id"] = self.mastodon_client_id
-        # self.config["mastodon"]["client_secret"] = self.mastodon_client_secret
-        # self.config["mastodon"]["access_token"] = self.mastodon_access_token
-        # self.config["mastodon"]["api_base_url"] = self.mastodon_api_base_url
+        self.config["mastodon"]["client_secret"] = self.mastodon_client_secret
+        self.config["mastodon"]["user_token"] = self.mastodon_user_token
+        self.config["mastodon"]["api_base_url"] = self.mastodon_api_base_url
 
         with self.settings_file.open(mode="w") as configfile:
             self.config.write(configfile)
