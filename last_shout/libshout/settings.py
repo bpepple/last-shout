@@ -31,6 +31,7 @@ class LastShoutSettings:
         self.access_secret = ""
 
         # Mastodon credentials
+        self.mastodon_client_id = ""
         self.mastodon_client_secret = ""
         self.mastodon_user_token = ""
         self.mastodon_api_base_url = ""
@@ -77,6 +78,9 @@ class LastShoutSettings:
         if self.config.has_option("twitter", "access_secret"):
             self.access_secret = self.config["twitter"]["access_secret"]
 
+        if self.config.has_option("mastodon", "client_id"):
+            self.mastodon_client_id = self.config["mastodon"]["client_id"]
+
         if self.config.has_option("mastodon", "client_secret"):
             self.mastodon_client_secret = self.config["mastodon"]["client_secret"]
 
@@ -105,6 +109,7 @@ class LastShoutSettings:
         self.config["twitter"]["access_key"] = self.access_key
         self.config["twitter"]["access_secret"] = self.access_secret
 
+        self.config["mastodon"]["client_id"] = self.mastodon_client_id
         self.config["mastodon"]["client_secret"] = self.mastodon_client_secret
         self.config["mastodon"]["user_token"] = self.mastodon_user_token
         self.config["mastodon"]["api_base_url"] = self.mastodon_api_base_url
