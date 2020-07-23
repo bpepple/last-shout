@@ -14,7 +14,7 @@ setup(
     license="GPLv3",
     packages=find_packages(exclude=["tests"]),
     python_requires=">=3.6",
-    install_requires=["pylast", "python-twitter"],
+    install_requires=["pylast", "python-twitter", "mastodon-py"],
     entry_points={"console_scripts": ["last-shout=last_shout.main:main"]},
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -33,5 +33,5 @@ setup(
         "Operating System :: POSIX :: Linux",
         "Operating System :: Microsoft :: Windows",
     ],
-    keywords=["lastfm", "twitter", "python", "music"],
+    keywords=["lastfm", "twitter", "python", "music", "mastodon"],
 )
