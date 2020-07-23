@@ -48,6 +48,24 @@ def create_parser():
         default=False,
     )
     parser.add_argument(
+        "--create-mastodon-app",
+        help="Create mastodon application",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
+        "--create-mastodon-user",
+        help="Create Mastodon user token",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
+        "--toot",
+        help="Post Last.fm stats to Mastodon",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version="%(prog)s {}".format(VERSION),
