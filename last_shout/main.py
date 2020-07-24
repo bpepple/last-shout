@@ -57,7 +57,6 @@ def create_mastodon_app(settings):
         website=app_url,
         api_base_url=instance,
         redirect_uris="urn:ietf:wg:oauth:2.0:oob",
-        to_file="pytooter_clientcred.txt",
     )
 
     if not (client_id or client_secret):
@@ -92,7 +91,6 @@ def create_mastodon_user_token(settings):
             code=auth,
             scopes=["write"],
             redirect_uri="urn:ietf:wg:oauth:2.0:oob",
-            to_file="pytooter_usercred.secret",
         )
     except MastodonIllegalArgumentError:
         return False
