@@ -189,8 +189,6 @@ def main():
     if opts.tweet:
         status = send_tweet(settings, twitter_text, None)
         print(f"Last.fm statistics posted to Twitter at {status.created_at}")
-    else:
-        print(twitter_text)
 
     if opts.toot:
         if not has_mastodon_app_credentials(
@@ -201,6 +199,9 @@ def main():
 
         status = sent_toot(settings, twitter_text)
         print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
+
+    if not opts.tweet and not opts.toot:
+        print(twitter_text)
 
 
 if __name__ == "__main__":
