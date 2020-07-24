@@ -48,16 +48,15 @@ def has_mastodon_user_credentials(settings):
 
 
 def create_mastodon_app(settings):
+    app_name = "Last-Shout"
+    app_url = "https://github.com/bpepple/last-shout"
     instance = input("Enter Mastodon instance (ex. 'https://mastodon.social'): ")
-    app_name = input("Enter name of application (ex. LastShout): ")
-    app_url = input("End url of application: ")
 
     client_id, client_secret = Mastodon.create_app(
         app_name,
         website=app_url,
         api_base_url=instance,
         redirect_uris="urn:ietf:wg:oauth:2.0:oob",
-        to_file="pytooter_clientcred.txt",
     )
 
     if not (client_id or client_secret):
@@ -89,10 +88,7 @@ def create_mastodon_user_token(settings):
     auth = input("\nCopy the authorized code here to generate user token: ")
     try:
         user_token = mastodon.log_in(
-            code=auth,
-            scopes=["write"],
-            redirect_uri="urn:ietf:wg:oauth:2.0:oob",
-            to_file="pytooter_usercred.secret",
+            code=auth, scopes=["write"], redirect_uri="urn:ietf:wg:oauth:2.0:oob",
         )
     except MastodonIllegalArgumentError:
         return False
@@ -189,8 +185,6 @@ def main():
     if opts.tweet:
         status = send_tweet(settings, twitter_text, None)
         print(f"Last.fm statistics posted to Twitter at {status.created_at}")
-    else:
-        print(twitter_text)
 
     if opts.toot:
         if not has_mastodon_app_credentials(
@@ -201,6 +195,9 @@ def main():
 
         status = sent_toot(settings, twitter_text)
         print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
+
+    if not opts.tweet and not opts.toot:
+        print(twitter_text)
 
 
 if __name__ == "__main__":
