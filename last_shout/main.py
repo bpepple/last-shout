@@ -48,9 +48,9 @@ def has_mastodon_user_credentials(settings):
 
 
 def create_mastodon_app(settings):
+    app_name = "Last-Shout"
+    app_url = "https://github.com/bpepple/last-shout"
     instance = input("Enter Mastodon instance (ex. 'https://mastodon.social'): ")
-    app_name = input("Enter name of application (ex. LastShout): ")
-    app_url = input("End url of application: ")
 
     client_id, client_secret = Mastodon.create_app(
         app_name,
@@ -88,9 +88,7 @@ def create_mastodon_user_token(settings):
     auth = input("\nCopy the authorized code here to generate user token: ")
     try:
         user_token = mastodon.log_in(
-            code=auth,
-            scopes=["write"],
-            redirect_uri="urn:ietf:wg:oauth:2.0:oob",
+            code=auth, scopes=["write"], redirect_uri="urn:ietf:wg:oauth:2.0:oob",
         )
     except MastodonIllegalArgumentError:
         return False
