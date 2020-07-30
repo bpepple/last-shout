@@ -12,39 +12,28 @@ from .libshout.utils import build_twitter_string
 
 
 def has_lastfm_credentials(settings):
-    if not settings.last_user and settings.last_access_key:
-        return False
-
-    return True
+    return bool(settings.last_user or not settings.last_access_key)
 
 
 def has_twitter_credentials(settings):
-    if not (
+    return bool((
         settings.consumer_key
         and settings.consumer_key
         and settings.access_key
         and settings.access_secret
-    ):
-        return False
-
-    return True
+    ))
 
 
 def has_mastodon_app_credentials(settings):
-    if not (
+    return bool((
         settings.mastodon_client_id
         and settings.mastodon_client_secret
         and settings.mastodon_api_base_url
-    ):
-        return False
-
-    return True
+    ))
 
 
 def has_mastodon_user_credentials(settings):
-    if not settings.mastodon_user_token:
-        return False
-    return True
+    return bool(settings.mastodon_user_token)
 
 
 def create_mastodon_app(settings):
@@ -104,9 +93,7 @@ def sent_toot(settings, toot_text):
         access_token=settings.mastodon_user_token,
         api_base_url=settings.mastodon_api_base_url,
     )
-    status = mastodon.toot(toot_text)
-
-    return status
+    return mastodon.toot(toot_text)
 
 
 def main():
