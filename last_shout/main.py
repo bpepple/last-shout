@@ -16,31 +16,29 @@ def has_lastfm_credentials(settings):
 
 
 def has_twitter_credentials(settings):
-    return bool((
+    return bool(
         settings.consumer_key
         and settings.consumer_key
         and settings.access_key
         and settings.access_secret
-    ))
-
-
-def has_mastodon_app_credentials(settings):
-    return bool((
-        settings.mastodon_client_id
-        and settings.mastodon_client_secret
-        and settings.mastodon_api_base_url
-    ))
+    )
 
 
 def has_mastodon_user_credentials(settings):
-    return bool(settings.mastodon_user_token)
+    return bool(
+        settings.mastodon_user_token
+        and settings.mastodon_client_id
+        and settings.mastodon_client_secret
+        and settings.mastodon_api_base_url
+    )
 
 
-def create_mastodon_app(settings):
+def create_mastodon_user_token(settings):
     app_name = "Last-Shout"
     app_url = "https://github.com/bpepple/last-shout"
     instance = input("Enter Mastodon instance (ex. 'https://mastodon.social'): ")
 
+    # Create mastodon app credentials
     client_id, client_secret = Mastodon.create_app(
         app_name,
         website=app_url,
@@ -51,26 +49,14 @@ def create_mastodon_app(settings):
     if not (client_id or client_secret):
         return False
 
-    settings.mastodon_client_id = client_id
-    settings.mastodon_client_secret = client_secret
-    settings.mastodon_api_base_url = instance
-    settings.save()
-
-    return True
-
-
-def create_mastodon_user_token(settings):
     mastodon = Mastodon(
-        client_id=settings.mastodon_client_id,
-        client_secret=settings.mastodon_client_secret,
-        api_base_url=settings.mastodon_api_base_url,
+        client_id=client_id, client_secret=client_secret, api_base_url=instance,
     )
     # Uri to provide to client to grant authorization
     print("Go to the follow url to grant authorization from Mastodon.\n")
     print(
         mastodon.auth_request_url(
-            client_id=settings.mastodon_client_id,
-            redirect_uris="urn:ietf:wg:oauth:2.0:oob",
+            client_id=client_id, redirect_uris="urn:ietf:wg:oauth:2.0:oob",
         )
     )
 
@@ -82,6 +68,9 @@ def create_mastodon_user_token(settings):
     except MastodonIllegalArgumentError:
         return False
 
+    settings.mastodon_client_id = client_id
+    settings.mastodon_client_secret = client_secret
+    settings.mastodon_api_base_url = instance
     settings.mastodon_user_token = user_token
     settings.save()
 
@@ -102,20 +91,8 @@ def main():
     parser = create_parser()
     opts = parser.parse_args()
 
-    # Create Mastodon application
-    if opts.create_mastodon_app:
-        result = create_mastodon_app(settings)
-        if result:
-            print("Saved Mastodon application credentials to configuration file.")
-        else:
-            print("Unable to create application credentials.")
-        sys.exit(0)
-
     # Create Mastodon user token
     if opts.create_mastodon_user:
-        if not has_mastodon_app_credentials(settings):
-            print("Missing Mastodon application credentials. Exiting...")
-            sys.exit(2)
         result = create_mastodon_user_token(settings)
         if result:
             print("Saved Mastodon user token to configuration file.")
@@ -174,9 +151,7 @@ def main():
         print(f"Last.fm statistics posted to Twitter at {status.created_at}")
 
     if opts.toot:
-        if not has_mastodon_app_credentials(
-            settings
-        ) or not has_mastodon_user_credentials(settings):
+        if not has_mastodon_user_credentials(settings):
             print("Missing Mastodon credentials. Exiting...")
             sys.exit(2)
 
