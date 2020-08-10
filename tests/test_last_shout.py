@@ -6,9 +6,8 @@ from unittest import TestCase, main
 from last_shout.libshout.settings import LastShoutSettings
 from last_shout.main import (
     has_lastfm_credentials,
-    has_twitter_credentials,
-    has_mastodon_app_credentials,
     has_mastodon_user_credentials,
+    has_twitter_credentials,
 )
 
 
@@ -74,8 +73,8 @@ class TestMain(TestCase):
         result = has_twitter_credentials(tmp_settings)
         self.assertFalse(result)
 
-    def test_mastodon_with_credentials(self):
-        """ Test mastodon credentials settings """
+    def test_mastodon_user_with_credentials(self):
+        """ Test mastodon user credentials settings """
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
         client_secret = "KDkEHbCD8kMi36BspWErfOxopoS9UQNVrjL4o6lwxqc"
         user_token = "123abc456789"
@@ -85,31 +84,6 @@ class TestMain(TestCase):
         self.config.mastodon_client_secret = client_secret
         self.config.mastodon_user_token = user_token
         self.config.mastodon_api_base_url = api_base_url
-        self.config.save()
-
-        tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
-        result = has_mastodon_app_credentials(tmp_settings)
-        self.assertTrue(result)
-
-    def test_mastodon_without_credentials(self):
-        """ Test mastodon credentials settings """
-        client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
-        client_secret = "KDkEHbCD8kMi36BspWErfOxopoS9UQNVrjL4o6lwxqc"
-
-        # Don't add the base url instance
-        self.config.mastodon_client_id = client_id
-        self.config.mastodon_client_secret = client_secret
-        self.config.save()
-
-        tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
-        result = has_mastodon_app_credentials(tmp_settings)
-        self.assertFalse(result)
-
-    def test_mastodon_user_with_credentials(self):
-        """ Test mastodon credentials settings """
-        user_token = "123abc456789"
-
-        self.config.mastodon_user_token = user_token
         self.config.save()
 
         tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
