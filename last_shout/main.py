@@ -10,26 +10,32 @@ from .libshout.settings import LastShoutSettings
 from .libshout.twitter import send_tweet
 from .libshout.utils import build_twitter_string
 
+MASTODON_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
+
 
 def has_lastfm_credentials(settings):
     return bool(settings.last_user or not settings.last_access_key)
 
 
 def has_twitter_credentials(settings):
-    return bool((
-        settings.consumer_key
-        and settings.consumer_key
-        and settings.access_key
-        and settings.access_secret
-    ))
+    return bool(
+        (
+            settings.consumer_key
+            and settings.consumer_key
+            and settings.access_key
+            and settings.access_secret
+        )
+    )
 
 
 def has_mastodon_app_credentials(settings):
-    return bool((
-        settings.mastodon_client_id
-        and settings.mastodon_client_secret
-        and settings.mastodon_api_base_url
-    ))
+    return bool(
+        (
+            settings.mastodon_client_id
+            and settings.mastodon_client_secret
+            and settings.mastodon_api_base_url
+        )
+    )
 
 
 def has_mastodon_user_credentials(settings):
@@ -45,7 +51,7 @@ def create_mastodon_app(settings):
         app_name,
         website=app_url,
         api_base_url=instance,
-        redirect_uris="urn:ietf:wg:oauth:2.0:oob",
+        redirect_uris=MASTODON_REDIRECT_URI,
     )
 
     if not (client_id or client_secret):
@@ -69,15 +75,14 @@ def create_mastodon_user_token(settings):
     print("Go to the follow url to grant authorization from Mastodon.\n")
     print(
         mastodon.auth_request_url(
-            client_id=settings.mastodon_client_id,
-            redirect_uris="urn:ietf:wg:oauth:2.0:oob",
+            client_id=settings.mastodon_client_id, redirect_uris=MASTODON_REDIRECT_URI,
         )
     )
 
     auth = input("\nCopy the authorized code here to generate user token: ")
     try:
         user_token = mastodon.log_in(
-            code=auth, scopes=["write"], redirect_uri="urn:ietf:wg:oauth:2.0:oob",
+            code=auth, scopes=["write"], redirect_uri=MASTODON_REDIRECT_URI,
         )
     except MastodonIllegalArgumentError:
         return False
