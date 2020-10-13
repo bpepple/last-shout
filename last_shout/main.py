@@ -21,7 +21,7 @@ def has_twitter_credentials(settings):
     return bool(
         (
             settings.consumer_key
-            and settings.consumer_key
+            and settings.consumer_secret
             and settings.access_key
             and settings.access_secret
         )
