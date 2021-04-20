@@ -2,7 +2,7 @@
 import configparser
 import platform
 from os import environ
-from pathlib import Path
+from pathlib import Path, PurePath
 
 
 class LastShoutSettings:
@@ -11,12 +11,11 @@ class LastShoutSettings:
     @staticmethod
     def get_settings_folder():
         """Method to determine where the users settings should be saved"""
-        if platform.system() == "Windows":
-            folder = Path(environ["APPDATA"]).joinpath("LastShout")
-        else:
-            folder = Path.home() / ".LastShout"
+        if platform.system() != "Windows":
+            return Path.home() / ".LastShout"
 
-        return folder
+        windows_path = PurePath(environ["APPDATA"]).joinpath("LastShout")
+        return Path(windows_path)
 
     def set_default_values(self):
         """Method to set default values as empty"""
