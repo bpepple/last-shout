@@ -6,7 +6,7 @@ from last_shout.libshout.settings import LastShoutSettings
 
 
 class TestSettings(TestCase):
-    """ Some simple tests of the project settings """
+    """Some simple tests of the project settings"""
 
     def setUp(self):
         self.tmp_dir = tempfile.TemporaryDirectory()
@@ -16,7 +16,7 @@ class TestSettings(TestCase):
         self.tmp_dir.cleanup()
 
     def test_lastfm_credentials(self):
-        """ Test lastfm credentials settings """
+        """Test lastfm credentials settings"""
         user = "test"
         access_key = "123456789041d6db1442edf362e17a83"
         # Save the test config file
@@ -30,7 +30,7 @@ class TestSettings(TestCase):
         self.assertEqual(new_config.last_access_key, access_key)
 
     def test_twitter_credentials(self):
-        """ Test twitter credentials settings """
+        """Test twitter credentials settings"""
         consumer_key = "1234567890VRF74DbwXc09ZzO"
         consumer_secret = "1234567890oWeQMHdUjFEUMJIEy2Hc03eV4jsF2DED1jCRIK8J"
         access_key = "12345-67890LkllzODgs1EPi47hgTKgniePhUPG7Yle4g7NJVU"
@@ -49,7 +49,7 @@ class TestSettings(TestCase):
         self.assertEqual(check_config.access_secret, access_secret)
 
     def test_mastodon_credentials(self):
-        """ Test mastodon credentials settings """
+        """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
         client_secret = "KDkEHbCD8kMi36BspWErfOxopoS9UQNVrjL4o6lwxqc"
         user_token = "123abc456789"

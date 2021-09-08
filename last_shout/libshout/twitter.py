@@ -5,7 +5,7 @@ import twitter
 
 
 def send_tweet(settings, tweet, encoding):
-    """ Simple function to send tweet to Twitter """
+    """Simple function to send tweet to Twitter"""
     api = twitter.Api(
         consumer_key=settings.consumer_key,
         consumer_secret=settings.consumer_secret,

@@ -5,7 +5,7 @@ from last_shout.libshout.utils import periods_to_string
 
 
 class TestUtilities(TestCase):
-    """ Some basic tests """
+    """Some basic tests"""
 
     def test_periods_to_string(self):
         result = periods_to_string("7day")

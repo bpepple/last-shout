@@ -6,9 +6,9 @@ from unittest import TestCase, main
 from last_shout.libshout.settings import LastShoutSettings
 from last_shout.main import (
     has_lastfm_credentials,
-    has_twitter_credentials,
     has_mastodon_app_credentials,
     has_mastodon_user_credentials,
+    has_twitter_credentials,
 )
 
 
@@ -21,7 +21,7 @@ class TestMain(TestCase):
         self.tmp_dir.cleanup()
 
     def test_lastfm_with_credentials(self):
-        """ Test lastfm credentials settings """
+        """Test lastfm credentials settings"""
         user = "test"
         access_key = "123456789041d6db1442edf362e17a83"
         # Save the test config file
@@ -46,7 +46,7 @@ class TestMain(TestCase):
         self.assertFalse(result)
 
     def test_twitter_with_credentials(self):
-        """ Test twitter credentials settings """
+        """Test twitter credentials settings"""
         consumer_key = "1234567890VRF74DbwXc09ZzO"
         consumer_secret = "1234567890oWeQMHdUjFEUMJIEy2Hc03eV4jsF2DED1jCRIK8J"
         access_key = "12345-67890LkllzODgs1EPi47hgTKgniePhUPG7Yle4g7NJVU"
@@ -63,7 +63,7 @@ class TestMain(TestCase):
         self.assertTrue(result)
 
     def test_twitter_without_credentials(self):
-        """ Test twitter credentials settings """
+        """Test twitter credentials settings"""
         access_secret = "12345678901GTmyC1h4T5Vjsd2Y5dBWMKnocdsvZlDnkw"
 
         # Only add the access secret and *not* the consumer key/secret or access key
@@ -75,7 +75,7 @@ class TestMain(TestCase):
         self.assertFalse(result)
 
     def test_mastodon_with_credentials(self):
-        """ Test mastodon credentials settings """
+        """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
         client_secret = "KDkEHbCD8kMi36BspWErfOxopoS9UQNVrjL4o6lwxqc"
         user_token = "123abc456789"
@@ -92,7 +92,7 @@ class TestMain(TestCase):
         self.assertTrue(result)
 
     def test_mastodon_without_credentials(self):
-        """ Test mastodon credentials settings """
+        """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
         client_secret = "KDkEHbCD8kMi36BspWErfOxopoS9UQNVrjL4o6lwxqc"
 
@@ -106,7 +106,7 @@ class TestMain(TestCase):
         self.assertFalse(result)
 
     def test_mastodon_user_with_credentials(self):
-        """ Test mastodon credentials settings """
+        """Test mastodon credentials settings"""
         user_token = "123abc456789"
 
         self.config.mastodon_user_token = user_token
@@ -117,7 +117,7 @@ class TestMain(TestCase):
         self.assertTrue(result)
 
     def test_mastodon_user_without_credentials(self):
-        """ Test mastodon credentials settings """
+        """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
 
         # Don't save the user token

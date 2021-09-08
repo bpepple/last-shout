@@ -75,14 +75,17 @@ def create_mastodon_user_token(settings):
     print("Go to the follow url to grant authorization from Mastodon.\n")
     print(
         mastodon.auth_request_url(
-            client_id=settings.mastodon_client_id, redirect_uris=MASTODON_REDIRECT_URI,
+            client_id=settings.mastodon_client_id,
+            redirect_uris=MASTODON_REDIRECT_URI,
         )
     )
 
     auth = input("\nCopy the authorized code here to generate user token: ")
     try:
         user_token = mastodon.log_in(
-            code=auth, scopes=["write"], redirect_uri=MASTODON_REDIRECT_URI,
+            code=auth,
+            scopes=["write"],
+            redirect_uri=MASTODON_REDIRECT_URI,
         )
     except MastodonIllegalArgumentError:
         return False
@@ -102,7 +105,7 @@ def sent_toot(settings, toot_text):
 
 
 def main():
-    """ Main Function """
+    """Main Function"""
     settings = LastShoutSettings()
     parser = create_parser()
     opts = parser.parse_args()
@@ -179,9 +182,9 @@ def main():
         print(f"Last.fm statistics posted to Twitter at {status.created_at}")
 
     if opts.toot:
-        if not has_mastodon_app_credentials(
+        if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
             settings
-        ) or not has_mastodon_user_credentials(settings):
+        ):
             print("Missing Mastodon credentials. Exiting...")
             sys.exit(2)
 

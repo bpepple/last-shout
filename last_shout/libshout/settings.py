@@ -56,7 +56,7 @@ class LastShoutSettings:
             self.load()
 
     def load(self):
-        """ Method to retrieve user's settings """
+        """Method to retrieve user's settings"""
         self.config.read(self.settings_file)
 
         if self.config.has_option("last_fm", "user"):
@@ -90,7 +90,7 @@ class LastShoutSettings:
             self.mastodon_api_base_url = self.config["mastodon"]["api_base_url"]
 
     def save(self):
-        """ Method to save user's settings """
+        """Method to save user's settings"""
         if not self.config.has_section("last_fm"):
             self.config.add_section("last_fm")
 

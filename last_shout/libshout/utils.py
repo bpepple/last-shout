@@ -5,7 +5,7 @@ MUSICAL_NOTE = "\u266A"
 
 
 def periods_to_string(period):
-    """ Function to convert time period setting to string value """
+    """Function to convert time period setting to string value"""
     now = datetime.datetime.now()
     switcher = {
         "overall": "All-Time",
