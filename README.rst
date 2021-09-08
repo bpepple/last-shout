@@ -9,13 +9,6 @@ Last-Shout
 .. image:: https://img.shields.io/pypi/pyversions/last-shout.svg
     :target: https://pypi.org/project/last-shout/
 
-.. image:: https://codecov.io/gh/bpepple/last-shout/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/bpepple/last-shout
-    :alt: Code coverage Status
-
-.. image:: https://travis-ci.org/bpepple/last-shout.svg?branch=master
-    :target: https://travis-ci.org/bpepple/last-shout
-
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
 
