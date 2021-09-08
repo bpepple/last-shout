@@ -1,0 +1,64 @@
+[tool.poetry]
+name = "last-shout"
+version = "0.8.0"
+description = "Post Last.fm statistics to Twitter and/or Mastodon"
+authors = ["Brian Pepple <bdpepple@gmail.com>"]
+license = "GPL-3.0-or-later"
+maintainers = ["Brian Pepple <bdpepple@gmail.com>"]
+readme = "README.rst"
+packages = [
+	{ include = "last_shout" },
+]
+include = [
+    { path = "tests", format = "sdist" }
+]
+classifiers=[
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Utilities",
+    "Topic :: Other/Nonlisted Topic",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX",
+    "Operating System :: POSIX :: BSD",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+]
+keywords=["lastfm", "twitter", "python", "music", "mastodon"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pylast = "^4.2.1"
+python-twitter = "^3.5"
+"Mastodon.py" = "^1.5.1"
+
+[tool.poetry.dev-dependencies]
+pytest-cov = "^2.12.1"
+flake8 = "^3.9.2"
+black = "^21.8b0"
+
+[tool.poetry.scripts]
+last-shout = "last_shout.main:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 95
+target-version = ["py37"] 
+
+[tool.poetry.urls]
+"Homepage" = "https://github.com/bpepple/last-shout"
+"Bug Tracker" = "https://github.com/bpepple/last-shout/issues"
+
+[tool.coverage.run]
+source = ["last_shout"]
+
+[tool.coverage.report]
+show_missing = true
