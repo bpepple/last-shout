@@ -96,7 +96,7 @@ def create_mastodon_user_token(settings):
     return True
 
 
-def sent_toot(settings, toot_text):
+def send_toot(settings, toot_text):
     mastodon = Mastodon(
         access_token=settings.mastodon_user_token,
         api_base_url=settings.mastodon_api_base_url,
@@ -186,7 +186,7 @@ def post_toot(settings, twitter_text):
         print("Missing Mastodon credentials. Exiting...")
         sys.exit(2)
 
-    status = sent_toot(settings, twitter_text)
+    status = send_toot(settings, twitter_text)
     print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
 
 
