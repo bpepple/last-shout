@@ -1,7 +1,7 @@
 """ Function to make the parser """
 import argparse
 
-from last_shout import VERSION
+from last_shout import __version__
 
 
 def create_parser():
@@ -68,7 +68,7 @@ def create_parser():
     parser.add_argument(
         "--version",
         action="version",
-        version="%(prog)s {}".format(VERSION),
+        version="%(prog)s {}".format(__version__),
         help="Show the version number and exit",
     )
 
