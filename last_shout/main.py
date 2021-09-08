@@ -153,19 +153,11 @@ def main():
 
     # Save Last.fm options
     if opts.set_lastfm:
-        if has_lastfm_credentials(settings):
-            settings.save()
-        else:
-            print("Missing Last.fm credetials. Unable to save.")
-            sys.exit(0)
+        save_lastfm_credentials(settings)
 
     # Save Twitter options
     if opts.set_twitter:
-        if has_twitter_credentials(settings):
-            settings.save()
-        else:
-            print("Missing Twitter credentials. Unable to save.")
-            sys.exit(0)
+        save_twitter_credentials(settings)
 
     # If Last.fm or Twitter credentials are missing exit
     if not has_lastfm_credentials(settings) or not has_twitter_credentials(settings):
@@ -178,21 +170,45 @@ def main():
     twitter_text = build_twitter_string(artists, opts.period)
 
     if opts.tweet:
-        status = send_tweet(settings, twitter_text, None)
-        print(f"Last.fm statistics posted to Twitter at {status.created_at}")
+        post_tweet(settings, twitter_text)
 
     if opts.toot:
-        if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
-            settings
-        ):
-            print("Missing Mastodon credentials. Exiting...")
-            sys.exit(2)
-
-        status = sent_toot(settings, twitter_text)
-        print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
+        post_toot(settings, twitter_text)
 
     if not opts.tweet and not opts.toot:
         print(twitter_text)
+
+
+def post_toot(settings, twitter_text):
+    if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
+        settings
+    ):
+        print("Missing Mastodon credentials. Exiting...")
+        sys.exit(2)
+
+    status = sent_toot(settings, twitter_text)
+    print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
+
+
+def post_tweet(settings, twitter_text):
+    status = send_tweet(settings, twitter_text, None)
+    print(f"Last.fm statistics posted to Twitter at {status.created_at}")
+
+
+def save_twitter_credentials(settings):
+    if has_twitter_credentials(settings):
+        settings.save()
+    else:
+        print("Missing Twitter credentials. Unable to save.")
+        sys.exit(0)
+
+
+def save_lastfm_credentials(settings):
+    if has_lastfm_credentials(settings):
+        settings.save()
+    else:
+        print("Missing Last.fm credetials. Unable to save.")
+        sys.exit(0)
 
 
 if __name__ == "__main__":
