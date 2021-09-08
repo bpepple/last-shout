@@ -42,6 +42,10 @@ pytest-cov = "^2.12.1"
 flake8 = "^3.9.2"
 black = "^21.8b0"
 tox = "^3.24.3"
+pre-commit = "^2.15.0"
+isort = "^5.9.3"
+seed-isort-config = "^2.2.0"
+flake8-builtins = "^1.5.3"
 
 [tool.poetry.scripts]
 last-shout = "last_shout.main:main"
@@ -50,13 +54,21 @@ last-shout = "last_shout.main:main"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry.urls]
+"Homepage" = "https://github.com/bpepple/last-shout"
+"Bug Tracker" = "https://github.com/bpepple/last-shout/issues"
+
 [tool.black]
 line-length = 95
 target-version = ["py37"] 
 
-[tool.poetry.urls]
-"Homepage" = "https://github.com/bpepple/last-shout"
-"Bug Tracker" = "https://github.com/bpepple/last-shout/issues"
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 95
+default_section = "THIRDPARTY"
+known_first_party = []
+known_third_party = ["mastodon", "pylast", "twitter"]
 
 [tool.coverage.run]
 source = ["last_shout"]
