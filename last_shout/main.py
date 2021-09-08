@@ -8,7 +8,7 @@ from .libshout.lastfm import get_top_artist
 from .libshout.options import create_parser
 from .libshout.settings import LastShoutSettings
 from .libshout.twitter import send_tweet
-from .libshout.utils import build_twitter_string
+from .libshout.utils import create_music_stats
 
 MASTODON_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 
@@ -167,31 +167,31 @@ def main():
     artists = get_top_artist(
         settings.last_access_key, settings.last_user, opts.number, opts.period
     )
-    twitter_text = build_twitter_string(artists, opts.period)
+    music_stats_txt = create_music_stats(artists, opts.period)
 
     if opts.tweet:
-        post_tweet(settings, twitter_text)
+        post_tweet(settings, music_stats_txt)
 
     if opts.toot:
-        post_toot(settings, twitter_text)
+        post_toot(settings, music_stats_txt)
 
     if not opts.tweet and not opts.toot:
-        print(twitter_text)
+        print(music_stats_txt)
 
 
-def post_toot(settings, twitter_text):
+def post_toot(settings, music_stats_txt):
     if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
         settings
     ):
         print("Missing Mastodon credentials. Exiting...")
         sys.exit(2)
 
-    status = send_toot(settings, twitter_text)
+    status = send_toot(settings, music_stats_txt)
     print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
 
 
-def post_tweet(settings, twitter_text):
-    status = send_tweet(settings, twitter_text, None)
+def post_tweet(settings, music_stats_txt):
+    status = send_tweet(settings, music_stats_txt, None)
     print(f"Last.fm statistics posted to Twitter at {status.created_at}")
 
 
