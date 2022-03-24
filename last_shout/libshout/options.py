@@ -71,7 +71,7 @@ def create_parser():
     parser.add_argument(
         "--version",
         action="version",
-        version="%(prog)s {}".format(__version__),
+        version=f"%(prog)s {__version__}",
         help="Show the version number and exit",
     )
 
