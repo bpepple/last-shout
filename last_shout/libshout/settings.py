@@ -3,31 +3,26 @@ import configparser
 import platform
 from os import environ
 from pathlib import Path, PurePath
+from typing import Optional
 
 
 class LastShoutSettings:
     """Class to handle project settings"""
 
     @staticmethod
-    def get_settings_folder():
+    def get_settings_folder() -> Path:
         """Method to determine where the users settings should be saved"""
         if platform.system() != "Windows":
-            return Path.home() / ".LastShout"
+            return Path.home() / ".last_shout"
 
         windows_path = PurePath(environ["APPDATA"]).joinpath("LastShout")
         return Path(windows_path)
 
-    def set_default_values(self):
+    def set_default_values(self: "LastShoutSettings") -> None:
         """Method to set default values as empty"""
         # Last.fm credentials
         self.last_user = ""
         self.last_access_key = ""
-
-        # Twitter credentials
-        self.consumer_key = ""
-        self.consumer_secret = ""
-        self.access_key = ""
-        self.access_secret = ""
 
         # Mastodon credentials
         self.mastodon_client_id = ""
@@ -35,7 +30,7 @@ class LastShoutSettings:
         self.mastodon_user_token = ""
         self.mastodon_api_base_url = ""
 
-    def __init__(self, config_dir=None):
+    def __init__(self: "LastShoutSettings", config_dir: Optional[str] = None) -> None:
         self.set_default_values()
 
         self.config = configparser.ConfigParser()
@@ -55,7 +50,7 @@ class LastShoutSettings:
         else:
             self.load()
 
-    def load(self):
+    def load(self: "LastShoutSettings") -> None:
         """Method to retrieve user's settings"""
         self.config.read(self.settings_file)
 
@@ -64,18 +59,6 @@ class LastShoutSettings:
 
         if self.config.has_option("last_fm", "access_key"):
             self.last_access_key = self.config["last_fm"]["access_key"]
-
-        if self.config.has_option("twitter", "consumer_key"):
-            self.consumer_key = self.config["twitter"]["consumer_key"]
-
-        if self.config.has_option("twitter", "consumer_secret"):
-            self.consumer_secret = self.config["twitter"]["consumer_secret"]
-
-        if self.config.has_option("twitter", "access_key"):
-            self.access_key = self.config["twitter"]["access_key"]
-
-        if self.config.has_option("twitter", "access_secret"):
-            self.access_secret = self.config["twitter"]["access_secret"]
 
         if self.config.has_option("mastodon", "client_id"):
             self.mastodon_client_id = self.config["mastodon"]["client_id"]
@@ -89,24 +72,16 @@ class LastShoutSettings:
         if self.config.has_option("mastodon", "api_base_url"):
             self.mastodon_api_base_url = self.config["mastodon"]["api_base_url"]
 
-    def save(self):
+    def save(self: "LastShoutSettings") -> None:
         """Method to save user's settings"""
         if not self.config.has_section("last_fm"):
             self.config.add_section("last_fm")
-
-        if not self.config.has_section("twitter"):
-            self.config.add_section("twitter")
 
         if not self.config.has_section("mastodon"):
             self.config.add_section("mastodon")
 
         self.config["last_fm"]["user"] = self.last_user
         self.config["last_fm"]["access_key"] = self.last_access_key
-
-        self.config["twitter"]["consumer_key"] = self.consumer_key
-        self.config["twitter"]["consumer_secret"] = self.consumer_secret
-        self.config["twitter"]["access_key"] = self.access_key
-        self.config["twitter"]["access_secret"] = self.access_secret
 
         self.config["mastodon"]["client_id"] = self.mastodon_client_id
         self.config["mastodon"]["client_secret"] = self.mastodon_client_secret

@@ -8,27 +8,23 @@ from last_shout.libshout import options
 class TestOptions(TestCase):
     """Simple tests for argparser"""
 
-    def setUp(self):
+    def setUp(self: "TestOptions") -> None:
         self.parser = options.create_parser()
 
-    def test_credentials_options(self):
+    def test_credentials_options(self: "TestOptions") -> None:
         """Some test for credentials options"""
         parsed = self.parser.parse_args(["--user", "test_user"])
-        self.assertEqual(parsed.user, "test_user")
+        assert parsed.user == "test_user"
 
-    def test_number_option(self):
+    def test_number_option(self: "TestOptions") -> None:
         """Test to verify the option returns an integer"""
         parsed = self.parser.parse_args(["-n", "5"])
-        self.assertEqual(parsed.number, 5)
+        assert parsed.number == 5
 
-    def test_set_lastfm(self):
+    def test_set_lastfm(self: "TestOptions") -> None:
         """Test setting of last.fm credentials option"""
         parsed = self.parser.parse_args(["--set-lastfm"])
-        self.assertTrue(parsed.set_lastfm)
-
-    def test_set_twitter(self):
-        parsed = self.parser.parse_args(["--set-twitter"])
-        self.assertTrue(parsed.set_twitter)
+        assert parsed.set_lastfm
 
 
 if __name__ == "__main__":

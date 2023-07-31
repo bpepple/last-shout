@@ -8,19 +8,18 @@ from last_shout.main import (
     has_lastfm_credentials,
     has_mastodon_app_credentials,
     has_mastodon_user_credentials,
-    has_twitter_credentials,
 )
 
 
 class TestMain(TestCase):
-    def setUp(self):
+    def setUp(self: "TestMain") -> None:
         self.tmp_dir = tempfile.TemporaryDirectory()
         self.config = LastShoutSettings(config_dir=self.tmp_dir.name)
 
-    def tearDown(self):
+    def tearDown(self: "TestMain") -> None:
         self.tmp_dir.cleanup()
 
-    def test_lastfm_with_credentials(self):
+    def test_lastfm_with_credentials(self: "TestMain") -> None:
         """Test lastfm credentials settings"""
         user = "test"
         access_key = "123456789041d6db1442edf362e17a83"
@@ -32,9 +31,9 @@ class TestMain(TestCase):
         # Now load that file and verify the contents
         tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
         result = has_lastfm_credentials(tmp_settings)
-        self.assertTrue(result)
+        assert result
 
-    def test_lastfm_without_credentials(self):
+    def test_lastfm_without_credentials(self: "TestMain") -> None:
         access_key = "123456789041d6db1442edf362e17a83"
         # Save the test config file without adding the user
         self.config.last_access_key = access_key
@@ -43,38 +42,9 @@ class TestMain(TestCase):
         # Now load that file and verify the contents
         tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
         result = has_lastfm_credentials(tmp_settings)
-        self.assertFalse(result)
+        assert not result
 
-    def test_twitter_with_credentials(self):
-        """Test twitter credentials settings"""
-        consumer_key = "1234567890VRF74DbwXc09ZzO"
-        consumer_secret = "1234567890oWeQMHdUjFEUMJIEy2Hc03eV4jsF2DED1jCRIK8J"
-        access_key = "12345-67890LkllzODgs1EPi47hgTKgniePhUPG7Yle4g7NJVU"
-        access_secret = "12345678901GTmyC1h4T5Vjsd2Y5dBWMKnocdsvZlDnkw"
-
-        self.config.consumer_key = consumer_key
-        self.config.consumer_secret = consumer_secret
-        self.config.access_key = access_key
-        self.config.access_secret = access_secret
-        self.config.save()
-
-        tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
-        result = has_twitter_credentials(tmp_settings)
-        self.assertTrue(result)
-
-    def test_twitter_without_credentials(self):
-        """Test twitter credentials settings"""
-        access_secret = "12345678901GTmyC1h4T5Vjsd2Y5dBWMKnocdsvZlDnkw"
-
-        # Only add the access secret and *not* the consumer key/secret or access key
-        self.config.access_secret = access_secret
-        self.config.save()
-
-        tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
-        result = has_twitter_credentials(tmp_settings)
-        self.assertFalse(result)
-
-    def test_mastodon_with_credentials(self):
+    def test_mastodon_with_credentials(self: "TestMain") -> None:
         """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
         client_secret = "KDkEHbCD8kMi36BspWErfOxopoS9UQNVrjL4o6lwxqc"
@@ -89,9 +59,9 @@ class TestMain(TestCase):
 
         tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
         result = has_mastodon_app_credentials(tmp_settings)
-        self.assertTrue(result)
+        assert result
 
-    def test_mastodon_without_credentials(self):
+    def test_mastodon_without_credentials(self: "TestMain") -> None:
         """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
         client_secret = "KDkEHbCD8kMi36BspWErfOxopoS9UQNVrjL4o6lwxqc"
@@ -103,9 +73,9 @@ class TestMain(TestCase):
 
         tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
         result = has_mastodon_app_credentials(tmp_settings)
-        self.assertFalse(result)
+        assert not result
 
-    def test_mastodon_user_with_credentials(self):
+    def test_mastodon_user_with_credentials(self: "TestMain") -> None:
         """Test mastodon credentials settings"""
         user_token = "123abc456789"
 
@@ -114,9 +84,9 @@ class TestMain(TestCase):
 
         tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
         result = has_mastodon_user_credentials(tmp_settings)
-        self.assertTrue(result)
+        assert result
 
-    def test_mastodon_user_without_credentials(self):
+    def test_mastodon_user_without_credentials(self: "TestMain") -> None:
         """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"
 
@@ -126,7 +96,7 @@ class TestMain(TestCase):
 
         tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
         result = has_mastodon_user_credentials(tmp_settings)
-        self.assertFalse(result)
+        assert not result
 
 
 if __name__ == "__main__":

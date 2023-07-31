@@ -4,10 +4,10 @@ import argparse
 from last_shout import __version__
 
 
-def create_parser():
+def create_parser() -> argparse.ArgumentParser:
     """Function creating the parser"""
     parser = argparse.ArgumentParser(
-        description="A program to post last.fm statistics" + " to Twitter and/or Mastodon.",
+        description="A program to post last.fm statistics to Mastodon.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("-u", "--user", help="Last.fm username")
@@ -29,26 +29,11 @@ def create_parser():
         "-p",
         "--period",
         default="7day",
-        help="The time period over which to retrieve top artists.\n"
-        + "Options are:\n"
-        + "overall | 7day | 1month | 3month | 6month | 12month",
-    )
-    parser.add_argument(
-        "-t",
-        "--tweet",
-        help="Post Last.fm stats to Twitter",
-        action="store_true",
-        default=False,
-    )
-    parser.add_argument("--consumer-key", help="Twitter consumer key")
-    parser.add_argument("--consumer-secret", help="Twitter consumer secret")
-    parser.add_argument("--access-key", help="Twitter access token key")
-    parser.add_argument("--access-secret", help="Twitter access secret")
-    parser.add_argument(
-        "--set-twitter",
-        help="Set Twitter credentials",
-        action="store_true",
-        default=False,
+        help=(
+            "The time period over which to retrieve top artists.\n"
+            "Options are:\n"
+            "overall | 7day | 1month | 3month | 6month | 12month",
+        ),
     )
     parser.add_argument(
         "--create-mastodon-app",

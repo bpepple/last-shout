@@ -1,12 +1,12 @@
 """ Various utilites """
-import datetime
+from datetime import datetime
 
 MUSICAL_NOTE = "\u266A"
 
 
-def periods_to_string(period):
+def periods_to_string(period: str) -> str:
     """Function to convert time period setting to string value"""
-    now = datetime.datetime.now()
+    now = datetime.now()  # noqa: DTZ005
     switcher = {
         "overall": "All-Time",
         "7day": "Weekly",
@@ -22,7 +22,7 @@ def periods_to_string(period):
 # TODO: Add function to truncate tweet if it's length is greater than 280 characters.
 
 
-def create_music_stats(artists, period):
+def create_music_stats(artists: list, period: str) -> str:
     """
     Function to convert Last.fm result to a string
     that will be posted to Twitter
