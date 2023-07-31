@@ -616,6 +616,18 @@ files = [
 ]
 
 [[package]]
+name = "pyxdg"
+version = "0.28"
+description = "PyXDG contains implementations of freedesktop.org standards in python."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyxdg-0.28-py2.py3-none-any.whl", hash = "sha256:bdaf595999a0178ecea4052b7f4195569c1ff4d344567bccdc12dfdf02d545ab"},
+    {file = "pyxdg-0.28.tar.gz", hash = "sha256:3267bb3074e934df202af2ee0868575484108581e6f3cb006af1da35395e88b4"},
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.1"
 description = "YAML parser and emitter for Python"
@@ -862,4 +874,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "5c08d25bde21006b141a89eedf0d4515104e01bd621aa10ac032a4e4e252ff5e"
+content-hash = "5344c3c8356240ee58932ccbed6d39eefbade1412d1ee6f5c8090239b6a5dfca"

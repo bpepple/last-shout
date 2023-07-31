@@ -5,6 +5,8 @@ from os import environ
 from pathlib import Path, PurePath
 from typing import Optional
 
+from xdg.BaseDirectory import save_config_path
+
 
 class LastShoutSettings:
     """Class to handle project settings"""
@@ -13,7 +15,7 @@ class LastShoutSettings:
     def get_settings_folder() -> Path:
         """Method to determine where the users settings should be saved"""
         if platform.system() != "Windows":
-            return Path.home() / ".last_shout"
+            return Path(save_config_path("last-shout"))
 
         windows_path = PurePath(environ["APPDATA"]).joinpath("LastShout")
         return Path(windows_path)
