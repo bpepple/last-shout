@@ -26,10 +26,6 @@ class TestOptions(TestCase):
         parsed = self.parser.parse_args(["--set-lastfm"])
         self.assertTrue(parsed.set_lastfm)
 
-    def test_set_twitter(self):
-        parsed = self.parser.parse_args(["--set-twitter"])
-        self.assertTrue(parsed.set_twitter)
-
 
 if __name__ == "__main__":
     main()
