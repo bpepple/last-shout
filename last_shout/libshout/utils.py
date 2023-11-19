@@ -1,10 +1,12 @@
 """ Various utilities """
 import datetime
 
+from pylast import TopItem
+
 MUSICAL_NOTE = "\u266A"
 
 
-def periods_to_string(period):
+def periods_to_string(period: str) -> str:
     """Function to convert time period setting to string value"""
     now = datetime.datetime.now()
     switcher = {
@@ -22,7 +24,7 @@ def periods_to_string(period):
 # TODO: Add function to truncate tweet if it's length is greater than 280 characters.
 
 
-def create_music_stats(artists, period):
+def create_music_stats(artists: list[TopItem], period: str) -> str:
     """
     Function to convert Last.fm result to a string
     that will be posted to Twitter
