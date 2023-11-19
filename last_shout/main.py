@@ -12,11 +12,11 @@ from .libshout.utils import create_music_stats
 MASTODON_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 
 
-def has_lastfm_credentials(settings):
+def has_lastfm_credentials(settings: LastShoutSettings) -> bool:
     return bool(settings.last_user or not settings.last_access_key)
 
 
-def has_mastodon_app_credentials(settings):
+def has_mastodon_app_credentials(settings: LastShoutSettings) -> bool:
     return bool(
         (
             settings.mastodon_client_id
@@ -26,11 +26,11 @@ def has_mastodon_app_credentials(settings):
     )
 
 
-def has_mastodon_user_credentials(settings):
+def has_mastodon_user_credentials(settings) -> bool:
     return bool(settings.mastodon_user_token)
 
 
-def create_mastodon_app(settings):
+def create_mastodon_app(settings: LastShoutSettings) -> bool:
     app_name = "Last-Shout"
     app_url = "https://github.com/bpepple/last-shout"
     instance = input("Enter Mastodon instance (ex. 'https://mastodon.social'): ")
@@ -53,7 +53,7 @@ def create_mastodon_app(settings):
     return True
 
 
-def create_mastodon_user_token(settings):
+def create_mastodon_user_token(settings: LastShoutSettings) -> bool:
     mastodon = Mastodon(
         client_id=settings.mastodon_client_id,
         client_secret=settings.mastodon_client_secret,
@@ -84,7 +84,7 @@ def create_mastodon_user_token(settings):
     return True
 
 
-def send_toot(settings, toot_text):
+def send_toot(settings: LastShoutSettings, toot_text: str):
     mastodon = Mastodon(
         access_token=settings.mastodon_user_token,
         api_base_url=settings.mastodon_api_base_url,
@@ -116,7 +116,7 @@ def main():
         if result:
             print("Saved Mastodon user token to configuration file.")
         else:
-            print("Unable to create Mastododon user token.")
+            print("Unable to create Mastodon user token.")
         sys.exit(0)
 
     # Get Last.fm credentials

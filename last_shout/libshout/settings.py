@@ -33,7 +33,7 @@ class LastShoutSettings:
         self.mastodon_user_token: str = ""
         self.mastodon_api_base_url: str = ""
 
-        self.config = configparser.ConfigParser()
+        self.config: configparser.ConfigParser = configparser.ConfigParser()
         if config_dir:
             self.folder = Path(config_dir)
         else:
