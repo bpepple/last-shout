@@ -8,7 +8,6 @@ from last_shout.main import (
     has_lastfm_credentials,
     has_mastodon_app_credentials,
     has_mastodon_user_credentials,
-    has_twitter_credentials,
 )
 
 
@@ -45,34 +44,9 @@ class TestMain(TestCase):
         result = has_lastfm_credentials(tmp_settings)
         self.assertFalse(result)
 
-    def test_twitter_with_credentials(self):
-        """Test twitter credentials settings"""
-        consumer_key = "1234567890VRF74DbwXc09ZzO"
-        consumer_secret = "1234567890oWeQMHdUjFEUMJIEy2Hc03eV4jsF2DED1jCRIK8J"
-        access_key = "12345-67890LkllzODgs1EPi47hgTKgniePhUPG7Yle4g7NJVU"
-        access_secret = "12345678901GTmyC1h4T5Vjsd2Y5dBWMKnocdsvZlDnkw"
 
-        self.config.consumer_key = consumer_key
-        self.config.consumer_secret = consumer_secret
-        self.config.access_key = access_key
-        self.config.access_secret = access_secret
-        self.config.save()
 
-        tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
-        result = has_twitter_credentials(tmp_settings)
-        self.assertTrue(result)
 
-    def test_twitter_without_credentials(self):
-        """Test twitter credentials settings"""
-        access_secret = "12345678901GTmyC1h4T5Vjsd2Y5dBWMKnocdsvZlDnkw"
-
-        # Only add the access secret and *not* the consumer key/secret or access key
-        self.config.access_secret = access_secret
-        self.config.save()
-
-        tmp_settings = LastShoutSettings(config_dir=self.tmp_dir.name)
-        result = has_twitter_credentials(tmp_settings)
-        self.assertFalse(result)
 
     def test_mastodon_with_credentials(self):
         """Test mastodon credentials settings"""

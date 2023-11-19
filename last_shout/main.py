@@ -7,7 +7,6 @@ from mastodon import Mastodon, MastodonIllegalArgumentError
 from .libshout.lastfm import get_top_artist
 from .libshout.options import create_parser
 from .libshout.settings import LastShoutSettings
-from .libshout.twitter import send_tweet
 from .libshout.utils import create_music_stats
 
 MASTODON_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
@@ -17,23 +16,12 @@ def has_lastfm_credentials(settings):
     return bool(settings.last_user or not settings.last_access_key)
 
 
-def has_twitter_credentials(settings):
-    return bool(
-        (
-            settings.consumer_key
-            and settings.consumer_secret
-            and settings.access_key
-            and settings.access_secret
-        )
-    )
-
-
 def has_mastodon_app_credentials(settings):
     return bool(
         (
-            settings.mastodon_client_id
-            and settings.mastodon_client_secret
-            and settings.mastodon_api_base_url
+                settings.mastodon_client_id
+                and settings.mastodon_client_secret
+                and settings.mastodon_api_base_url
         )
     )
 
@@ -155,22 +143,15 @@ def main():
     if opts.set_lastfm:
         save_lastfm_credentials(settings)
 
-    # Save Twitter options
-    if opts.set_twitter:
-        save_twitter_credentials(settings)
-
-    # If Last.fm or Twitter credentials are missing exit
-    if not has_lastfm_credentials(settings) or not has_twitter_credentials(settings):
-        print("Missing Last.fm or Twitter credentials. Exitting...")
+    # If Last.fm are missing exit
+    if not has_lastfm_credentials(settings):
+        print("Missing Last.fm. Exiting...")
         sys.exit(2)
 
     artists = get_top_artist(
         settings.last_access_key, settings.last_user, opts.number, opts.period
     )
     music_stats_txt = create_music_stats(artists, opts.period)
-
-    if opts.tweet:
-        post_tweet(settings, music_stats_txt)
 
     if opts.toot:
         post_toot(settings, music_stats_txt)
@@ -181,7 +162,7 @@ def main():
 
 def post_toot(settings, music_stats_txt):
     if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
-        settings
+            settings
     ):
         print("Missing Mastodon credentials. Exiting...")
         sys.exit(2)
@@ -190,24 +171,11 @@ def post_toot(settings, music_stats_txt):
     print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
 
 
-def post_tweet(settings, music_stats_txt):
-    status = send_tweet(settings, music_stats_txt, None)
-    print(f"Last.fm statistics posted to Twitter at {status.created_at}")
-
-
-def save_twitter_credentials(settings):
-    if has_twitter_credentials(settings):
-        settings.save()
-    else:
-        print("Missing Twitter credentials. Unable to save.")
-        sys.exit(0)
-
-
 def save_lastfm_credentials(settings):
     if has_lastfm_credentials(settings):
         settings.save()
     else:
-        print("Missing Last.fm credetials. Unable to save.")
+        print("Missing Last.fm credentials. Unable to save.")
         sys.exit(0)
 
 

@@ -45,12 +45,6 @@ def create_parser():
     parser.add_argument("--access-key", help="Twitter access token key")
     parser.add_argument("--access-secret", help="Twitter access secret")
     parser.add_argument(
-        "--set-twitter",
-        help="Set Twitter credentials",
-        action="store_true",
-        default=False,
-    )
-    parser.add_argument(
         "--create-mastodon-app",
         help="Create mastodon application",
         action="store_true",

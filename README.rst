@@ -15,7 +15,7 @@ Last-Shout
 Quick Description
 -----------------
 
-A command line tool to tweet a user's top artist statistics from Last.fm to Twitter and Mastodon.
+A command line tool to toot a user's top artist statistics from Last.fm to Mastodon.
 
 Installation
 ------------
@@ -43,19 +43,11 @@ Installing the latest version from Github:
 Getting started
 ---------------
 
-In order to use Last-Shout, you need at a minimum to get authentication keys for Twitter_ and Last.fm_.
-
-- To get the necessary authenticaton keys for **Twitter**, refer to the documentation here_.
-
-- To get the necessary authentication keys for **Last.fm**, refer to their documentation_.
-
-.. _Twitter: https://twitter.com
+In order to use Last-Shout, you need at a minimum to get authentication keys for and Last.fm_.
 
 .. _Last.fm: https://www.last.fm
 
-.. _here: https://python-twitter.readthedocs.io/en/latest/getting_started.html
 
-.. _documentation: https://python-twitter.readthedocs.io/en/latest/getting_started.html
 
 Help
 ----
@@ -84,16 +76,6 @@ Help
                           The time period over which to retrieve top artists.
                           Options are: overall | 7day | 1month | 3month | 6month
                           | 12month (default: 7day)
-    -t, --tweet           Post Last.fm stats to Twitter (default: False)
-    --consumer-key CONSUMER_KEY
-                          Twitter consumer key (default: None)
-    --consumer-secret CONSUMER_SECRET
-                          Twitter consumer secret (default: None)
-    --access-key ACCESS_KEY
-                          Twitter access token key (default: None)
-    --access-secret ACCESS_SECRET
-                          Twitter access secret (default: None)
-    --set-twitter         Set Twitter credentials (default: False)
     --create-mastodon-app
                           Create mastodon application (default: False)
     --create-mastodon-user

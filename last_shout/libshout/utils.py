@@ -1,4 +1,4 @@
-""" Various utilites """
+""" Various utilities """
 import datetime
 
 MUSICAL_NOTE = "\u266A"
