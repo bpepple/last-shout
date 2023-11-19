@@ -92,6 +92,25 @@ def send_toot(settings: LastShoutSettings, toot_text: str):
     return mastodon.toot(toot_text)
 
 
+def post_toot(settings, music_stats_txt):
+    if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
+        settings
+    ):
+        print("Missing Mastodon credentials. Exiting...")
+        sys.exit(2)
+
+    status = send_toot(settings, music_stats_txt)
+    print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
+
+
+def save_lastfm_credentials(settings):
+    if has_lastfm_credentials(settings):
+        settings.save()
+    else:
+        print("Missing Last.fm credentials. Unable to save.")
+        sys.exit(0)
+
+
 def main():
     """Main Function"""
     settings = LastShoutSettings()
@@ -152,31 +171,15 @@ def main():
         settings.last_access_key, settings.last_user, opts.number, opts.period
     )
     music_stats_txt = create_music_stats(artists, opts.period)
+    if not music_stats_txt:
+        print("No results returned from Last.fm")
+        exit(0)
 
     if opts.toot:
         post_toot(settings, music_stats_txt)
 
     if not opts.tweet and not opts.toot:
         print(music_stats_txt)
-
-
-def post_toot(settings, music_stats_txt):
-    if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
-        settings
-    ):
-        print("Missing Mastodon credentials. Exiting...")
-        sys.exit(2)
-
-    status = send_toot(settings, music_stats_txt)
-    print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
-
-
-def save_lastfm_credentials(settings):
-    if has_lastfm_credentials(settings):
-        settings.save()
-    else:
-        print("Missing Last.fm credentials. Unable to save.")
-        sys.exit(0)
 
 
 if __name__ == "__main__":

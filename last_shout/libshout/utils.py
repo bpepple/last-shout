@@ -29,6 +29,8 @@ def create_music_stats(artists: list[TopItem], period: str) -> str:
     Function to convert Last.fm result to a string
     that will be posted to Twitter
     """
+    if not artists:
+        return ""
     total = len(artists)
     txt = f"{MUSICAL_NOTE} My {periods_to_string(period)} Top {total} #lastfm artists: "
 
