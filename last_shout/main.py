@@ -19,9 +19,9 @@ def has_lastfm_credentials(settings):
 def has_mastodon_app_credentials(settings):
     return bool(
         (
-                settings.mastodon_client_id
-                and settings.mastodon_client_secret
-                and settings.mastodon_api_base_url
+            settings.mastodon_client_id
+            and settings.mastodon_client_secret
+            and settings.mastodon_api_base_url
         )
     )
 
@@ -162,7 +162,7 @@ def main():
 
 def post_toot(settings, music_stats_txt):
     if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
-            settings
+        settings
     ):
         print("Missing Mastodon credentials. Exiting...")
         sys.exit(2)

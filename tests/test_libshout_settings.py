@@ -29,8 +29,6 @@ class TestSettings(TestCase):
         self.assertEqual(new_config.last_user, user)
         self.assertEqual(new_config.last_access_key, access_key)
 
-
-
     def test_mastodon_credentials(self):
         """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"

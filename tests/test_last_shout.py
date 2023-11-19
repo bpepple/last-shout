@@ -44,10 +44,6 @@ class TestMain(TestCase):
         result = has_lastfm_credentials(tmp_settings)
         self.assertFalse(result)
 
-
-
-
-
     def test_mastodon_with_credentials(self):
         """Test mastodon credentials settings"""
         client_id = "H4to3LMKNmZ6a6pRGNKgvgej1TGKI66y6PEckNkfU5U"

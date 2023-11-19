@@ -27,6 +27,5 @@ class TestOptions(TestCase):
         self.assertTrue(parsed.set_lastfm)
 
 
-
 if __name__ == "__main__":
     main()
