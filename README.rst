@@ -43,7 +43,7 @@ Installing the latest version from Github:
 Getting started
 ---------------
 
-In order to use Last-Shout, you need at a minimum to get authentication keys for and Last.fm_.
+In order to use Last-Shout, you need at a minimum to get authentication keys for Last.fm_ and Mastodon.
 
 .. _Last.fm: https://www.last.fm
 
