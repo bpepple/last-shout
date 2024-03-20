@@ -46,7 +46,7 @@ pre-commit = "^2.15.0"
 isort = "^5.9.3"
 seed-isort-config = "^2.2.0"
 flake8-builtins = "^1.5.3"
-black = "^23.11.0"
+black = "^24.3.0"
 
 [tool.poetry.scripts]
 last-shout = "last_shout.main:main"
