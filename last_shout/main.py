@@ -152,8 +152,7 @@ def main():
 
     # Create Mastodon application
     if opts.create_mastodon_app:
-        result = create_mastodon_app(settings)
-        if result:
+        if create_mastodon_app(settings):
             print("Saved Mastodon application credentials to configuration file.")
         else:
             print("Unable to create application credentials.")
@@ -164,8 +163,7 @@ def main():
         if not has_mastodon_app_credentials(settings):
             print("Missing Mastodon application credentials. Exiting...")
             sys.exit(2)
-        result = create_mastodon_user_token(settings)
-        if result:
+        if create_mastodon_user_token(settings):
             print("Saved Mastodon user token to configuration file.")
         else:
             print("Unable to create Mastodon user token.")
