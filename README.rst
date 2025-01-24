@@ -18,27 +18,13 @@ Quick Description
 A command line tool to toot a user's top artist statistics from Last.fm to Mastodon.
 
 Installation
-------------
-
-PyPi
-~~~~
-
-Install it yourself:
-
-.. code:: bash
-
-  $ pip install --user last-shout
-
-GitHub
 ~~~~~~
 
 Installing the latest version from Github:
 
 .. code:: bash
 
-  $ git clone https://github.com/bpepple/last-shout.git
-  $ cd last-shout
-  $ python3 setup.py install
+  $ pipx install last-shout
 
 Getting started
 ---------------
@@ -48,37 +34,34 @@ In order to use Last-Shout, you need at a minimum to get authentication keys for
 .. _Last.fm: https://www.last.fm
 
 
-
 Help
 ----
 
 ::
 
-  usage: main.py [-h] [-u USER] [--last-access-key LAST_ACCESS_KEY]
-                 [--set-lastfm] [-n NUMBER] [-p PERIOD] [-t]
-                 [--consumer-key CONSUMER_KEY]
-                 [--consumer-secret CONSUMER_SECRET] [--access-key ACCESS_KEY]
-                 [--access-secret ACCESS_SECRET] [--set-twitter]
-                 [--create-mastodon-app] [--create-mastodon-user] [--toot]
-                 [--version]
+ usage: last-shout [-h] [-u USER] [--last-access-key LAST_ACCESS_KEY] [--set-lastfm] [-n NUMBER] [-p PERIOD] [-t] [--bluesky-handle BLUESKY_HANDLE] [--bluesky-password BLUESKY_PASSWORD] [--set-bluesky] [--create-mastodon-app]
+                  [--create-mastodon-user] [--toot] [--skeet] [--version]
 
-  A program to post last.fm statistics to Twitter and/or Mastodon.
+ A program to post last.fm statistics to Twitter and/or Mastodon.
 
-  optional arguments:
-    -h, --help            show this help message and exit
-    -u USER, --user USER  Last.fm username (default: None)
-    --last-access-key LAST_ACCESS_KEY
-                          Last.fm access key (default: None)
-    --set-lastfm          Set Last.fm credentials (default: False)
-    -n NUMBER, --number NUMBER
-                          Number of last.fm top artists (default: 10)
-    -p PERIOD, --period PERIOD
-                          The time period over which to retrieve top artists.
-                          Options are: overall | 7day | 1month | 3month | 6month
-                          | 12month (default: 7day)
-    --create-mastodon-app
-                          Create mastodon application (default: False)
-    --create-mastodon-user
-                          Create Mastodon user token (default: False)
-    --toot                Post Last.fm stats to Mastodon (default: False)
-    --version             Show the version number and exit
+ options:
+  -h, --help            show this help message and exit
+  -u, --user USER       Last.fm username (default: None)
+  --last-access-key LAST_ACCESS_KEY
+                        Last.fm access key (default: None)
+  --set-lastfm          Set Last.fm credentials (default: False)
+  -n, --number NUMBER   Number of last.fm top artists (default: 10)
+  -p, --period PERIOD   The time period over which to retrieve top artists. Options are: overall | 7day | 1month | 3month | 6month | 12month (default: 7day)
+  -t, --tweet           Post Last.fm stats to Twitter (default: False)
+  --bluesky-handle BLUESKY_HANDLE
+                        Bluesky handle (default: None)
+  --bluesky-password BLUESKY_PASSWORD
+                        Bluesky password (default: None)
+  --set-bluesky         Set Bluesky credentials (default: False)
+  --create-mastodon-app
+                        Create mastodon application (default: False)
+  --create-mastodon-user
+                        Create Mastodon user token (default: False)
+  --toot                Post Last.fm stats to Mastodon (default: False)
+  --skeet               Post Last.fm stats to Bluesky (default: False)
+  --version             Show the version number and exit
