@@ -1,4 +1,5 @@
 """ Various utilities """
+
 import datetime
 
 from pylast import TopItem

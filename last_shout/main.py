@@ -2,6 +2,9 @@
 
 import sys
 
+from atproto import Client
+from atproto_client.models.app.bsky.feed.post import CreateRecordResponse
+from atproto_core.exceptions import AtProtocolError
 from mastodon import Mastodon, MastodonIllegalArgumentError
 
 from .libshout.lastfm import get_top_artist
@@ -14,6 +17,10 @@ MASTODON_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 
 def has_lastfm_credentials(settings: LastShoutSettings) -> bool:
     return bool(settings.last_user or not settings.last_access_key)
+
+
+def has_bluesky_credentials(settings: LastShoutSettings) -> bool:
+    return bool(settings.bluesky_handle or not settings.bluesky_password)
 
 
 def has_mastodon_app_credentials(settings: LastShoutSettings) -> bool:
@@ -84,7 +91,7 @@ def create_mastodon_user_token(settings: LastShoutSettings) -> bool:
     return True
 
 
-def send_toot(settings: LastShoutSettings, toot_text: str):
+def _send_toot(settings: LastShoutSettings, toot_text: str):
     mastodon = Mastodon(
         access_token=settings.mastodon_user_token,
         api_base_url=settings.mastodon_api_base_url,
@@ -99,8 +106,34 @@ def post_toot(settings, music_stats_txt):
         print("Missing Mastodon credentials. Exiting...")
         sys.exit(2)
 
-    status = send_toot(settings, music_stats_txt)
+    status = _send_toot(settings, music_stats_txt)
     print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
+
+
+def _send_skeet(settings: LastShoutSettings, music_stats_txt) -> CreateRecordResponse:
+    client = Client()
+    client.login(settings.bluesky_handle, settings.bluesky_password)
+    return client.send_post(text=music_stats_txt)
+
+
+def post_skeet(settings, music_stats_txt):
+    if not has_bluesky_credentials(settings):
+        print("Missing Bluesky credentials. Exiting...")
+        sys.exit(2)
+
+    try:
+        _send_skeet(settings, music_stats_txt)
+    except AtProtocolError as e:
+        print("Failed to send skeet. %s", e)
+    print("Last.fm statistics posted to Bluesky")
+
+
+def save_bluesky_credentials(settings: LastShoutSettings):
+    if has_bluesky_credentials(settings):
+        settings.save()
+    else:
+        print("Missing Bluesky credentials. Unable to save.")
+        sys.exit(0)
 
 
 def save_lastfm_credentials(settings):
@@ -119,8 +152,7 @@ def main():
 
     # Create Mastodon application
     if opts.create_mastodon_app:
-        result = create_mastodon_app(settings)
-        if result:
+        if create_mastodon_app(settings):
             print("Saved Mastodon application credentials to configuration file.")
         else:
             print("Unable to create application credentials.")
@@ -131,8 +163,7 @@ def main():
         if not has_mastodon_app_credentials(settings):
             print("Missing Mastodon application credentials. Exiting...")
             sys.exit(2)
-        result = create_mastodon_user_token(settings)
-        if result:
+        if create_mastodon_user_token(settings):
             print("Saved Mastodon user token to configuration file.")
         else:
             print("Unable to create Mastodon user token.")
@@ -145,28 +176,24 @@ def main():
     if opts.last_access_key:
         settings.last_access_key = opts.last_access_key
 
-    # Get Twitter credentials
-    if opts.consumer_key:
-        settings.consumer_key = opts.consumer_key
-
-    if opts.consumer_secret:
-        settings.consumer_secret = opts.consumer_secret
-
-    if opts.access_key:
-        settings.access_key = opts.access_key
-
-    if opts.access_secret:
-        settings.access_secret = opts.access_secret
-
-    # Save Last.fm options
     if opts.set_lastfm:
         save_lastfm_credentials(settings)
 
-    # If Last.fm are missing exit
     if not has_lastfm_credentials(settings):
         print("Missing Last.fm. Exiting...")
         sys.exit(2)
 
+    # Bluesky
+    if opts.bluesky_handle:
+        settings.bluesky_handle = opts.bluesky_handle
+
+    if opts.bluesky_password:
+        settings.bluesky_password = opts.bluesky_password
+
+    if opts.set_bluesky:
+        save_bluesky_credentials(settings)
+
+    # Get last.fm stats
     artists = get_top_artist(
         settings.last_access_key, settings.last_user, opts.number, opts.period
     )
@@ -177,6 +204,9 @@ def main():
 
     if opts.toot:
         post_toot(settings, music_stats_txt)
+
+    if opts.skeet:
+        post_skeet(settings, music_stats_txt)
 
     if not opts.tweet and not opts.toot:
         print(music_stats_txt)

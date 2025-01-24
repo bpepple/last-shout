@@ -1,9 +1,9 @@
 """Class to handle project settings"""
+
 import configparser
 import platform
 from os import environ
 from pathlib import Path, PurePath
-from typing import Optional
 
 from xdg.BaseDirectory import save_config_path
 
@@ -21,7 +21,7 @@ class LastShoutSettings:
         windows_path = PurePath(environ["APPDATA"]).joinpath("LastShout")
         return Path(windows_path)
 
-    def __init__(self: "LastShoutSettings", config_dir: Optional[str] = None) -> None:
+    def __init__(self: "LastShoutSettings", config_dir: str | None = None) -> None:
         """Method to set default values as empty"""
         # Last.fm credentials
         self.last_user: str = ""
@@ -33,7 +33,11 @@ class LastShoutSettings:
         self.mastodon_user_token: str = ""
         self.mastodon_api_base_url: str = ""
 
-        self.config: configparser.ConfigParser = configparser.ConfigParser()
+        # Bluesky credentials
+        self.bluesky_handle: str = ""
+        self.bluesky_password: str = ""
+
+        self.config: configparser.ConfigParser = configparser.RawConfigParser()
         if config_dir:
             self.folder = Path(config_dir)
         else:
@@ -72,6 +76,12 @@ class LastShoutSettings:
         if self.config.has_option("mastodon", "api_base_url"):
             self.mastodon_api_base_url = self.config["mastodon"]["api_base_url"]
 
+        if self.config.has_option("bluesky", "handle"):
+            self.bluesky_handle = self.config["bluesky"]["handle"]
+
+        if self.config.has_option("bluesky", "password"):
+            self.bluesky_password = self.config["bluesky"]["password"]
+
     def save(self: "LastShoutSettings") -> None:
         """Method to save user's settings"""
         if not self.config.has_section("last_fm"):
@@ -80,6 +90,9 @@ class LastShoutSettings:
         if not self.config.has_section("mastodon"):
             self.config.add_section("mastodon")
 
+        if not self.config.has_section("bluesky"):
+            self.config.add_section("bluesky")
+
         self.config["last_fm"]["user"] = self.last_user
         self.config["last_fm"]["access_key"] = self.last_access_key
 
@@ -87,6 +100,9 @@ class LastShoutSettings:
         self.config["mastodon"]["client_secret"] = self.mastodon_client_secret
         self.config["mastodon"]["user_token"] = self.mastodon_user_token
         self.config["mastodon"]["api_base_url"] = self.mastodon_api_base_url
+
+        self.config["bluesky"]["handle"] = self.bluesky_handle
+        self.config["bluesky"]["password"] = self.bluesky_password
 
         with self.settings_file.open(mode="w") as configfile:
             self.config.write(configfile)

@@ -1,4 +1,5 @@
 """ Test for the project utilities """
+
 from unittest import TestCase, main
 
 from last_shout.libshout.utils import periods_to_string

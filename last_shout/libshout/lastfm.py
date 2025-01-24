@@ -1,4 +1,5 @@
 """ Function to users top artist from Last.fm """
+
 import pylast
 
 
