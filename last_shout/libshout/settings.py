@@ -1,4 +1,5 @@
 """Class to handle project settings"""
+
 import configparser
 import platform
 from os import environ

@@ -1,4 +1,5 @@
 """ Function to make the parser """
+
 import argparse
 
 from last_shout import __version__

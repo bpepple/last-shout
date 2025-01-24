@@ -1,4 +1,5 @@
 """ Test for the project settings """
+
 import tempfile
 from unittest import TestCase, main
 
