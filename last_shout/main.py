@@ -145,20 +145,6 @@ def main():
     if opts.last_access_key:
         settings.last_access_key = opts.last_access_key
 
-    # Get Twitter credentials
-    if opts.consumer_key:
-        settings.consumer_key = opts.consumer_key
-
-    if opts.consumer_secret:
-        settings.consumer_secret = opts.consumer_secret
-
-    if opts.access_key:
-        settings.access_key = opts.access_key
-
-    if opts.access_secret:
-        settings.access_secret = opts.access_secret
-
-    # Save Last.fm options
     if opts.set_lastfm:
         save_lastfm_credentials(settings)
 
