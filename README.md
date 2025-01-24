@@ -1,44 +1,27 @@
-==========
-Last-Shout
-==========
+# Last-Shout
 
-
-.. image:: https://img.shields.io/pypi/v/last-shout.svg
-    :target: https://pypi.org/project/last-shout/
-
-.. image:: https://img.shields.io/pypi/pyversions/last-shout.svg
-    :target: https://pypi.org/project/last-shout/
-
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
-
-Quick Description
------------------
+[![PyPI - Version](https://img.shields.io/pypi/v/last-shout.svg)](https://pypi.org/project/last-shout/)
+[![PyPI - Python](https://img.shields.io/pypi/pyversions/last-shout.svg)](https://pypi.org/project/last-shout/)
+[![Pre-Commit](https://img.shields.io/badge/Pre--Commit-Enabled-informational?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 A command line tool to toot a user's top artist statistics from Last.fm to Mastodon.
 
-Installation
-~~~~~~
+## Installation
 
 Installing the latest version from Github:
 
-.. code:: bash
+```bash
+pipx install last-shout
+```
 
-  $ pipx install last-shout
+## Getting started
 
-Getting started
----------------
-
-In order to use Last-Shout, you need at a minimum to get authentication keys for Last.fm_ and Mastodon.
-
-.. _Last.fm: https://www.last.fm
+In order to use Last-Shout, you need at a minimum to get authentication keys for [Last.fm](https://www.last.fm) and Mastodon.
 
 
-Help
-----
+## Help
 
-::
-
+```bash
  usage: last-shout [-h] [-u USER] [--last-access-key LAST_ACCESS_KEY] [--set-lastfm] [-n NUMBER] [-p PERIOD] [-t] [--bluesky-handle BLUESKY_HANDLE] [--bluesky-password BLUESKY_PASSWORD] [--set-bluesky] [--create-mastodon-app]
                   [--create-mastodon-user] [--toot] [--skeet] [--version]
 
@@ -65,3 +48,4 @@ Help
   --toot                Post Last.fm stats to Mastodon (default: False)
   --skeet               Post Last.fm stats to Bluesky (default: False)
   --version             Show the version number and exit
+```
