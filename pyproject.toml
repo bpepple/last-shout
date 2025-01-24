@@ -5,7 +5,7 @@ description = "Post Last.fm statistics to Twitter and/or Mastodon"
 authors = ["Brian Pepple <bdpepple@gmail.com>"]
 license = "GPL-3.0-or-later"
 maintainers = ["Brian Pepple <bdpepple@gmail.com>"]
-readme = "README.rst"
+readme = "README.md"
 packages = [
 	{ include = "last_shout" },
 ]
