@@ -69,7 +69,7 @@ multi_line_output = 3
 line_length = 95
 default_section = "THIRDPARTY"
 known_first_party = []
-known_third_party = ["mastodon", "pylast", "xdg"]
+known_third_party = ["atproto", "atproto_client", "atproto_core", "mastodon", "pylast", "xdg"]
 
 [tool.coverage.run]
 source = ["last_shout"]
