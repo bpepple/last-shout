@@ -20,7 +20,7 @@ def has_lastfm_credentials(settings: LastShoutSettings) -> bool:
 
 
 def has_bluesky_credentials(settings: LastShoutSettings) -> bool:
-    return bool(settings.bluesky_handle or not settings.bluesky_password)
+    return bool(settings.bluesky_handle and settings.bluesky_password)
 
 
 def has_mastodon_app_credentials(settings: LastShoutSettings) -> bool:
