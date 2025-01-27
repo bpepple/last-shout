@@ -3,7 +3,6 @@
 import sys
 
 from atproto import Client
-from atproto_client.models.app.bsky.feed.post import CreateRecordResponse
 from atproto_core.exceptions import AtProtocolError
 from mastodon import Mastodon, MastodonIllegalArgumentError
 
@@ -108,12 +107,6 @@ def post_toot(settings, music_stats_txt):
 
     status = _send_toot(settings, music_stats_txt)
     print(f"Last.fm statistics posted to Mastodon at {status.created_at}")
-
-
-def _send_skeet(settings: LastShoutSettings, music_stats_txt) -> CreateRecordResponse:
-    client = Client()
-    client.login(settings.bluesky_handle, settings.bluesky_password)
-    return client.send_post(text=music_stats_txt)
 
 
 def post_skeet(settings, music_stats_txt):
