@@ -16,7 +16,7 @@ MASTODON_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 
 
 def has_lastfm_credentials(settings: LastShoutSettings) -> bool:
-    return bool(settings.last_user or not settings.last_access_key)
+    return bool(settings.last_user and settings.last_access_key)
 
 
 def has_bluesky_credentials(settings: LastShoutSettings) -> bool:
