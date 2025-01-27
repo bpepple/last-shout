@@ -10,13 +10,13 @@ from mastodon import Mastodon, MastodonIllegalArgumentError
 from .libshout.lastfm import get_top_artist
 from .libshout.options import create_parser
 from .libshout.settings import LastShoutSettings
-from .libshout.utils import create_music_stats
+from .libshout.utils import create_atproto_txt, create_mastodon_txt
 
 MASTODON_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 
 
 def has_lastfm_credentials(settings: LastShoutSettings) -> bool:
-    return bool(settings.last_user or not settings.last_access_key)
+    return bool(settings.last_user and settings.last_access_key)
 
 
 def has_bluesky_credentials(settings: LastShoutSettings) -> bool:
@@ -121,8 +121,11 @@ def post_skeet(settings, music_stats_txt):
         print("Missing Bluesky credentials. Exiting...")
         sys.exit(2)
 
+    client = Client()
+    client.login(settings.bluesky_handle, settings.bluesky_password)
+
     try:
-        _send_skeet(settings, music_stats_txt)
+        client.send_post(text=music_stats_txt)
     except AtProtocolError as e:
         print("Failed to send skeet. %s", e)
     print("Last.fm statistics posted to Bluesky")
@@ -197,19 +200,18 @@ def main():
     artists = get_top_artist(
         settings.last_access_key, settings.last_user, opts.number, opts.period
     )
-    music_stats_txt = create_music_stats(artists, opts.period)
-    if not music_stats_txt:
-        print("No results returned from Last.fm")
-        exit(0)
 
     if opts.toot:
-        post_toot(settings, music_stats_txt)
+        txt = create_mastodon_txt(artists, opts.period)
+        post_toot(settings, txt)
 
     if opts.skeet:
-        post_skeet(settings, music_stats_txt)
+        txt = create_atproto_txt(artists, opts.period)
+        post_skeet(settings, txt)
 
-    if not opts.tweet and not opts.toot:
-        print(music_stats_txt)
+    if not opts.skeet and not opts.toot:
+        txt = create_mastodon_txt(artists, opts.period)
+        print(txt)
 
 
 if __name__ == "__main__":

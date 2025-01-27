@@ -1,45 +1,61 @@
 """ Various utilities """
 
-import datetime
+from datetime import datetime
 
+from atproto import client_utils
+from atproto_client.utils import TextBuilder
 from pylast import TopItem
 
 MUSICAL_NOTE = "\u266A"
 
 
 def periods_to_string(period: str) -> str:
-    """Function to convert time period setting to string value"""
-    now = datetime.datetime.now()
-    switcher = {
+    """Converts a time period code to a user-friendly string."""
+    period_map = {
         "overall": "All-Time",
         "7day": "Weekly",
         "1month": "Monthly",
         "3month": "Quarterly",
         "6month": "Semi-Annual",
-        "12month": str(now.year),
+        "12month": str(datetime.now().year),
     }
-
-    return switcher.get(period, " ")
-
-
-# TODO: Add function to truncate tweet if it's length is greater than 280 characters.
+    return period_map.get(period, "")
 
 
-def create_music_stats(artists: list[TopItem], period: str) -> str:
+def _format_artists(artists: list[TopItem]) -> str:
     """
-    Function to convert Last.fm result to a string
-    that will be posted to Twitter
+    Formats a list of artists into a comma-separated string with
+    an ampersand before the last artist.
     """
     if not artists:
         return ""
     total = len(artists)
-    txt = f"{MUSICAL_NOTE} My {periods_to_string(period)} Top {total} #lastfm artists: "
+    artist_strings = [f"{artist.item.name} ({artist.weight})" for artist in artists]
+    if total > 1:
+        artist_strings[-1] = (
+            f"& {artist_strings[-1]}"  # prepend with ampersand if more than one artist
+        )
+    return ", ".join(artist_strings)
 
-    for count, artist in enumerate(artists, 1):
-        txt += f"{artist.item.name} ({artist.weight})"
-        if count < total - 1:
-            txt += ", "
-        elif count == total - 1:
-            txt += " & "
 
-    return txt
+def create_mastodon_txt(artists: list[TopItem], period: str) -> str:
+    """Creates a Mastodon post string with the list of top artists."""
+    if not artists:
+        return ""
+    total = len(artists)
+    header = f"{MUSICAL_NOTE} My {periods_to_string(period)} Top {total} #lastfm artists: "
+    return f"{header}{_format_artists(artists)}"
+
+
+def create_atproto_txt(artists: list[TopItem], period: str) -> TextBuilder | None:
+    """Creates an AT Protocol post with the list of top artists."""
+    if not artists:
+        return None
+    total = len(artists)
+    txt_builder = (
+        client_utils.TextBuilder()
+        .text(f"{MUSICAL_NOTE} My {periods_to_string(period)} Top {total} ")
+        .tag("#lastfm", "lastfm")
+        .text(" artists: ")
+    )
+    return txt_builder.text(_format_artists(artists))
