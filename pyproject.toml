@@ -36,7 +36,7 @@ python = "^3.11,<3.14"
 "Mastodon.py" = "^1.5.1"
 pylast = "^5.3.0"
 pyxdg = "^0.28"
-atproto = "^0.0.57"
+atproto = "^0.0.58"
 
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^2.12.1"
