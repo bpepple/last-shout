@@ -16,8 +16,8 @@ pipx install last-shout
 
 ## Getting started
 
-In order to use Last-Shout, you need at a minimum to get authentication keys for [Last.fm](https://www.last.fm) and Mastodon.
-
+In order to use Last-Shout, you need at a minimum to get authentication keys for [Last.fm](https://www.last.fm) and
+Mastodon.
 
 ## Help
 
@@ -48,4 +48,70 @@ In order to use Last-Shout, you need at a minimum to get authentication keys for
   --toot                Post Last.fm stats to Mastodon (default: False)
   --skeet               Post Last.fm stats to Bluesky (default: False)
   --version             Show the version number and exit
+```
+
+## Set Systemd Timer
+
+Once you've set your credentials in the application, most users will want it to run on regular intervals, and if you're
+running a Linux distribution with systemd you can set-up a timer to do that.
+
+Start by a systemd unit file for it in `~/.config/systemd/user/last-shout-weekly.service`
+
+```text
+[Unit]
+Description=Run weekly Last-Shout
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h
+ExecStart=%h/.local/bin/last-shout --toot --skeet
+
+[Install]
+WantedBy=default.target
+```
+
+Now let's create a time for it in `~/.config/systemd/user/last-shout-weekly.timer`:
+
+```text
+[Unit]
+Description=Start the Systemd service test.service every 10 minutes
+
+[Timer]
+OnCalendar=Fri 11:30
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+Then run the following to enable it:
+
+```bash
+systemctl --user enable --now last-shout-weekly.timer
+```
+
+Then reload the user daemon:
+
+```bash
+systemctl --user daemon-reload
+```
+
+Now run the following to verify the timer is enabled by running:
+
+```bash
+systemctl --user list-timers
+```
+
+If everything is alright you should see output similar to this:
+
+```bash
+bpepple@faramir:~$ systemctl --user list-timers
+NEXT                          LEFT LAST                              PASSED UNIT                         ACTIVATES                     
+Tue 2025-01-28 16:53:50 EST    23h Mon 2025-01-27 16:53:50 EST 4min 21s ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Fri 2025-01-31 11:30:00 EST 3 days Fri 2025-01-24 11:30:06 EST            - last-shout-weekly.timer      last-shout-weekly.service
+-                                - Mon 2025-01-27 16:50:50 EST     7min ago grub-boot-success.timer      grub-boot-success.service
+
+3 timers listed.
+
 ```
