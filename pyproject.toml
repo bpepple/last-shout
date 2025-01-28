@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "last-shout"
-version = "0.9.0"
+version = "0.9.1"
 description = "Post Last.fm statistics to Twitter and/or Mastodon"
 authors = ["Brian Pepple <bdpepple@gmail.com>"]
 license = "GPL-3.0-or-later"
