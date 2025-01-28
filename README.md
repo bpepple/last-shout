@@ -75,7 +75,7 @@ Now let's create a time for it in `~/.config/systemd/user/last-shout-weekly.time
 
 ```text
 [Unit]
-Description=Start the Systemd service test.service every 10 minutes
+Description=Start the Systemd service test.service every Friday at 11:30
 
 [Timer]
 OnCalendar=Fri 11:30
