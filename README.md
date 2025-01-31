@@ -115,3 +115,8 @@ Fri 2025-01-31 11:30:00 EST 3 days Fri 2025-01-24 11:30:06 EST            - last
 3 timers listed.
 
 ```
+Now run the following to make sure the user timer can run even if they aren't logged in when the timer is ran:
+```
+sudo loginctl enable-linger username
+```
+To verify that the setting has been applied, check for a file with the same name as the user in the /var/lib/systemd/linger directory.
