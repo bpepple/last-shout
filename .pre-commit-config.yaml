@@ -1,19 +1,13 @@
 repos:
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v2.2.0
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    # uv version.
+    rev: 0.8.15
     hooks:
-      - id: seed-isort-config
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+      # Update the uv lockfile
+      - id: uv-lock
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.12.12
     hooks:
-      - id: isort
-  - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 24.10.0
-    hooks:
-      - id: black
-        language_version: python3.11
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.1.1
-    hooks:
-      - id: flake8
-        additional_dependencies: [flake8-builtins]
+      - id: ruff
+      - id: ruff-format

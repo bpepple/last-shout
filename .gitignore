@@ -132,3 +132,5 @@ dmypy.json
 
 # Visual Code config
 .vscode/
+
+test-results/
