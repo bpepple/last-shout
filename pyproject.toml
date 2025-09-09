@@ -44,15 +44,16 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pytest-cov>=2.12.1,<3.0.0",
+    "pytest-cov>=7.0.0,<8.0.0",
     "flake8>=7.1.1,<8.0.0",
     "tox>=4.24.1,<5.0.0",
     "pre-commit>=4.1.0,<5.0.0",
     "isort>=6.0.0b2,<7.0.0",
     "seed-isort-config>=2.2.0,<3.0.0",
-    "flake8-builtins>=2.5.0,<3.0.0",
+    "flake8-builtins>=3.0.0,<4.0.0",
     "hatchling>=1.27.0",
     "ruff>=0.12.12",
+    "coverage[toml]>=7.10.6",
 ]
 
 [project.urls]
@@ -96,6 +97,30 @@ known_third_party = ["atproto", "atproto_client", "atproto_core", "mastodon", "p
 
 [tool.coverage.run]
 source = ["last_shout"]
+branch = true
+concurrency = ["multiprocessing"]
+omit = [
+  ".git/*",
+   ".pytest_cache/*",
+  ".venv*/*",
+  "*__pycache__*",
+  "dist/*",
+  "test-results/*",
+]
+
+[tool.pytest.ini_options]
+addopts = """
+    --junit-xml=test-results/pytest/results.xml
+    -ra
+    --strict-config
+    --strict-markers
+    --cov
+    --cov-append
+    --cov-report=html
+    --cov-report=term
+"""
+junit_family = "xunit2"
+testpaths = "tests"
 
 [tool.coverage.report]
 show_missing = true
