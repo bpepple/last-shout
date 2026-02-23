@@ -1,6 +1,6 @@
 [project]
 name = "last-shout"
-version = "0.10.0"
+version = "0.10.1"
 description = "Post Last.fm statistics to Twitter and/or Mastodon"
 readme = "README.md"
 authors = [

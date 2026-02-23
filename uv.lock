@@ -576,7 +576,7 @@ wheels = [
 
 [[package]]
 name = "last-shout"
-version = "0.10.0"
+version = "0.10.1"
 source = { editable = "." }
 dependencies = [
     { name = "atproto" },
