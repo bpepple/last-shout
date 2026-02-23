@@ -1,4 +1,4 @@
-""" Test for the main """
+"""Test for the main"""
 
 import tempfile
 from unittest import TestCase, main

@@ -1,4 +1,4 @@
-""" Test for the argparser """
+"""Test for the argparser"""
 
 from unittest import TestCase, main
 
