@@ -1,6 +1,6 @@
 [project]
 name = "last-shout"
-version = "0.9.1"
+version = "0.10.0"
 description = "Post Last.fm statistics to Twitter and/or Mastodon"
 readme = "README.md"
 authors = [
@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Utilities",
     "Topic :: Other/Nonlisted Topic",
     "Operating System :: MacOS :: MacOS X",
