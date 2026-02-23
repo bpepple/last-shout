@@ -164,9 +164,7 @@ def _send_toot(settings: LastShoutSettings, toot_text: str):
 
 def post_toot(settings: LastShoutSettings, music_stats_txt: str) -> None:
     """Post Last.fm statistics to Mastodon."""
-    if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(
-        settings
-    ):
+    if not has_mastodon_app_credentials(settings) or not has_mastodon_user_credentials(settings):
         raise CredentialsError("Missing Mastodon credentials")
 
     try:

@@ -1,18 +1,17 @@
-[tool.poetry]
+[project]
 name = "last-shout"
 version = "0.9.1"
 description = "Post Last.fm statistics to Twitter and/or Mastodon"
-authors = ["Brian Pepple <bdpepple@gmail.com>"]
-license = "GPL-3.0-or-later"
-maintainers = ["Brian Pepple <bdpepple@gmail.com>"]
 readme = "README.md"
-packages = [
-	{ include = "last_shout" },
+authors = [
+    {name = "Brian Pepple", email = "bdpepple@gmail.com"},
 ]
-include = [
-    { path = "tests", format = "sdist" }
+maintainers = [
+    {name = "Brian Pepple", email = "bdpepple@gmail.com"},
 ]
-classifiers=[
+requires-python = ">=3.11,<4.0"
+license = {text = "GPL-3.0-or-later"}
+classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
@@ -29,50 +28,110 @@ classifiers=[
     "Operating System :: POSIX :: Linux",
     "Operating System :: Microsoft :: Windows",
 ]
-keywords=["lastfm", "twitter", "python", "music", "mastodon"]
+keywords = [
+    "lastfm",
+    "twitter",
+    "python",
+    "music",
+    "mastodon",
+]
+dependencies = [
+    "Mastodon-py>=2.1.3,<3.0.0",
+    "pylast>=5.3.0,<6.0.0",
+    "pyxdg>=0.28,<1.0",
+    "atproto>=0.0.65,<1.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11,<3.14"
-"Mastodon.py" = "^2.1.3"
-pylast = "^5.3.0"
-pyxdg = "^0.28"
-atproto = "^0.0.62"
+[dependency-groups]
+dev = [
+    "pytest-cov>=7.0.0,<8.0.0",
+    "flake8>=7.1.1,<8.0.0",
+    "tox>=4.24.1,<5.0.0",
+    "pre-commit>=4.1.0,<5.0.0",
+    "isort>=6.0.0b2,<7.0.0",
+    "seed-isort-config>=2.2.0,<3.0.0",
+    "flake8-builtins>=3.0.0,<4.0.0",
+    "hatchling>=1.27.0",
+    "ruff>=0.12.12",
+    "coverage[toml]>=7.10.6",
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest-cov = "^2.12.1"
-flake8 = "^7.1.1"
-tox = "^4.24.1"
-pre-commit = "^4.1.0"
-isort = "^6.0.0b2"
-seed-isort-config = "^2.2.0"
-flake8-builtins = "^2.5.0"
-black = "^24.10.0"
-
-[tool.poetry.scripts]
-last-shout = "last_shout.main:main"
-
-[build-system]
-requires = ["poetry-core>=1.1.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.urls]
-"Homepage" = "https://github.com/bpepple/last-shout"
+[project.urls]
+Homepage = "https://github.com/bpepple/last-shout"
 "Bug Tracker" = "https://github.com/bpepple/last-shout/issues"
 
-[tool.black]
-line-length = 95
-target-version = ["py39"]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+skip-excluded-dirs = true
+
+[tool.hatch.build.targets.sdist]
+include = ["last_shout", "tests", "NEWS.md"]
+exclude = ["*/**/*~"]
+
+[tool.hatch.build.targets.wheel]
+include = ["last_shout"]
+exclude = ["*/**/*~"]
+
+[project.scripts]
+last-shout = "last_shout.main:main"
+
+[tool.ruff]
+extend-exclude = ["typings"]
+line-length = 100
+show-fixes = true
+target-version = "py311"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
 
 [tool.isort]
 profile = "black"
 multi_line_output = 3
-line_length = 95
+line_length = 100
 default_section = "THIRDPARTY"
 known_first_party = []
 known_third_party = ["atproto", "atproto_client", "atproto_core", "mastodon", "pylast", "xdg"]
 
 [tool.coverage.run]
 source = ["last_shout"]
+branch = true
+concurrency = ["multiprocessing"]
+omit = [
+  ".git/*",
+   ".pytest_cache/*",
+  ".venv*/*",
+  "*__pycache__*",
+  "dist/*",
+  "test-results/*",
+]
+
+[tool.pytest.ini_options]
+addopts = """
+    --junit-xml=test-results/pytest/results.xml
+    -ra
+    --strict-config
+    --strict-markers
+    --cov
+    --cov-append
+    --cov-report=html
+    --cov-report=term
+"""
+junit_family = "xunit2"
+testpaths = "tests"
 
 [tool.coverage.report]
 show_missing = true
+
+[tool.coverage.html]
+directory = "test-results/coverage"
+
+[tool.tox]
+env_list = ["3.11", "3.12", "3.13"]
+min_version = "4.22"
+
+[tool.tox.env_run_base]
+commands = [["pytest"]]
+dependency_groups = ["dev"]

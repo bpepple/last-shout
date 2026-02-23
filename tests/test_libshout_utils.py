@@ -1,4 +1,4 @@
-""" Test for the project utilities """
+"""Test for the project utilities"""
 
 from unittest import TestCase, main
 

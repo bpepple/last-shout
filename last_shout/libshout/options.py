@@ -137,9 +137,7 @@ def create_parser() -> argparse.ArgumentParser:
     # Last.fm configuration
     lastfm_group = parser.add_argument_group("Last.fm Configuration")
     lastfm_group.add_argument("-u", "--user", metavar="USERNAME", help="Last.fm username")
-    lastfm_group.add_argument(
-        "--last-access-key", metavar="KEY", help="Last.fm API access key"
-    )
+    lastfm_group.add_argument("--last-access-key", metavar="KEY", help="Last.fm API access key")
     lastfm_group.add_argument(
         "--set-lastfm",
         action="store_true",
@@ -163,8 +161,7 @@ def create_parser() -> argparse.ArgumentParser:
         default="7day",
         metavar="PERIOD",
         help=(
-            "Time period for top artists. "
-            "Options: overall, 7day, 1month, 3month, 6month, 12month"
+            "Time period for top artists. Options: overall, 7day, 1month, 3month, 6month, 12month"
         ),
     )
 

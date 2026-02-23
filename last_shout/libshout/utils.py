@@ -7,7 +7,7 @@ from atproto import client_utils
 from atproto_client.utils import TextBuilder
 from pylast import TopItem
 
-MUSICAL_NOTE = "\u266A"
+MUSICAL_NOTE = "\u266a"
 
 # Constants for better maintainability
 PERIOD_MAP: Dict[str, str] = {

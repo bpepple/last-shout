@@ -48,9 +48,7 @@ class LastShoutSettings:
             if "APPDATA" not in environ:
                 raise SettingsError("APPDATA environment variable not found on Windows")
 
-            windows_path = PurePath(environ["APPDATA"]).joinpath(
-                LastShoutSettings.WINDOWS_APP_NAME
-            )
+            windows_path = PurePath(environ["APPDATA"]).joinpath(LastShoutSettings.WINDOWS_APP_NAME)
             return Path(windows_path)
 
         except Exception as e:
@@ -150,9 +148,7 @@ class LastShoutSettings:
 
             # Load Last.fm settings
             if self.config.has_option(self.SECTION_LASTFM, "user"):
-                self.last_user = self.config.get(
-                    self.SECTION_LASTFM, "user", fallback=""
-                ).strip()
+                self.last_user = self.config.get(self.SECTION_LASTFM, "user", fallback="").strip()
 
             if self.config.has_option(self.SECTION_LASTFM, "access_key"):
                 self.last_access_key = self.config.get(
@@ -215,9 +211,7 @@ class LastShoutSettings:
 
             # Set Mastodon settings
             self.config.set(self.SECTION_MASTODON, "client_id", self.mastodon_client_id)
-            self.config.set(
-                self.SECTION_MASTODON, "client_secret", self.mastodon_client_secret
-            )
+            self.config.set(self.SECTION_MASTODON, "client_secret", self.mastodon_client_secret)
             self.config.set(self.SECTION_MASTODON, "user_token", self.mastodon_user_token)
             self.config.set(self.SECTION_MASTODON, "api_base_url", self.mastodon_api_base_url)
 
@@ -273,9 +267,7 @@ class LastShoutSettings:
     def has_mastodon_app_credentials(self) -> bool:
         """Check if Mastodon app credentials are configured."""
         return bool(
-            self.mastodon_client_id
-            and self.mastodon_client_secret
-            and self.mastodon_api_base_url
+            self.mastodon_client_id and self.mastodon_client_secret and self.mastodon_api_base_url
         )
 
     def has_mastodon_user_credentials(self) -> bool:
