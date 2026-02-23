@@ -278,10 +278,10 @@ def main() -> int:
         if opts.toot:
             txt = create_mastodon_txt(artists, opts.period)
             post_toot(settings, txt)
-        elif opts.skeet:
+        if opts.skeet:
             txt = create_atproto_txt(artists, opts.period)
             post_skeet(settings, txt)
-        else:
+        if not opts.toot and not opts.skeet:
             txt = create_mastodon_txt(artists, opts.period)
             print(txt)
 
