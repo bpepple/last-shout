@@ -9,7 +9,7 @@ authors = [
 maintainers = [
     {name = "Brian Pepple", email = "bdpepple@gmail.com"},
 ]
-requires-python = ">=3.11,<4.0"
+requires-python = ">=3.11"
 license = {text = "GPL-3.0-or-later"}
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -21,6 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Topic :: Utilities",
     "Topic :: Other/Nonlisted Topic",
     "Operating System :: MacOS :: MacOS X",
@@ -130,7 +131,7 @@ show_missing = true
 directory = "test-results/coverage"
 
 [tool.tox]
-env_list = ["3.11", "3.12", "3.13"]
+env_list = ["3.11", "3.12", "3.13", "3.14", "3.15"]
 min_version = "4.22"
 
 [tool.tox.env_run_base]
